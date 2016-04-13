@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/login', 'Controller@loginsso');
 Route::get('/home', 'Controller@loginredirect');
-Route::get('/home', 'Controller@portaltohome');
+Route::get('/home2', 'Controller@portaltohome');
 Route::get('/logout', 'Controller@logout');
 
 #halaman berisi form create pengajuan [localhost:8000/ijin]

@@ -28,15 +28,19 @@ class Controller extends BaseController
         $result = DB::table('users')->where('username', '=', $usernameSSO)->count();
         
         if ($bol == true){
+            if($usernameSSO == "fadlurrahman.ar"){
+                return view('action.admin');
+            }else{
             if($result == 0)
-            {
-                $newUser = new users;
-                $newUser->username = $usernameSSO;
-                $newUser->nama = $nameSSO;
-                $newUser->role = $roleSSO;
-                $newUser->save();
-            }
+                {
+                    $newUser = new users;
+                    $newUser->username = $usernameSSO;
+                    $newUser->nama = $nameSSO;
+                    $newUser->role = $roleSSO;
+                    $newUser->save();
+                }
             return view('action.home');
+            }
         }
     }
     public function logout()
