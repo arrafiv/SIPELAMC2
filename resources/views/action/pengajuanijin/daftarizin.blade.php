@@ -24,7 +24,7 @@
     <table class="highlight">
         <thead>
             <tr>
-                <th data-field="username">User Name</th>
+                <th data-field="nama_kegiatan">Nama Kegiatan</th>
                 <th data-field="penyelenggara">Penyelenggara</th>
                 <th data-field="deskripsi">Deskripsi</th>
             </tr>

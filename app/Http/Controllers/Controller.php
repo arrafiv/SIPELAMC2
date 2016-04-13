@@ -100,7 +100,10 @@ class Controller extends BaseController
     }
     public function getdaftarizin()
     {
-        $daftarizin = DB::table('kegiatans')->get();
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $daftarizin = DB::table('kegiatans')->where('username', '=', $usernameSSO)->get();
         return view('action.pengajuanijin.daftarizin', compact('daftarizin'));
     }
     
