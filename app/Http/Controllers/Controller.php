@@ -106,6 +106,10 @@ class Controller extends BaseController
         $daftarizin = DB::table('kegiatans')->where('username', '=', $usernameSSO)->get();
         return view('action.pengajuanijin.daftarizin', compact('daftarizin'));
     }
+    public function getsurat() 
+    {
+        return view ('action/surat/createsurat');
+    }
     
     
 }

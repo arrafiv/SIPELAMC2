@@ -28,6 +28,9 @@ Route::post('action/pengajuanijin/create', 'Controller@createizin');
 #Menampilkan daftar  izin
 Route::get('/pengajuanijin/daftar-izin', 'Controller@getdaftarizin');
 
+#Menampilkan halaman surat
+Route::get('/surat', 'Controller@getsurat');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
