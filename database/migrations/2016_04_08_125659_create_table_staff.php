@@ -16,6 +16,10 @@ class CreateTableStaff extends Migration
             $table->string('username')->primary()->references('username')->on('users');
             $table->string('nip', 100)->unique();
         });
+        // Schema::table('staffs', function ($table) {
+        //     $table->string('divisi');
+        // });
+
     }
 
     /**

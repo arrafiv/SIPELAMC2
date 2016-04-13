@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddDivisiToStaffsTable' => $baseDir . '/database/migrations/2016_04_13_071146_add_divisi_to_staffs_table.php',
     'CAS_AuthenticationException' => $vendorDir . '/jasig/phpcas/source/CAS/AuthenticationException.php',
     'CAS_Client' => $vendorDir . '/jasig/phpcas/source/CAS/Client.php',
     'CAS_CookieJar' => $vendorDir . '/jasig/phpcas/source/CAS/CookieJar.php',
