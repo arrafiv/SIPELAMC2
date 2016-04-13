@@ -53,8 +53,14 @@
         <div class="col s12 l3">
             <div class="card blue-grey lighten-5">
                 <div class="card-content white">
-                    <span class="card-title">Card Title</span>
-                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                    <span class="grey-text text-darken-1">rifqi.putra42</span><i class="material-icons right">mode_edit</i>
+                    <div class=""><p class="pink-text text-darken-4">Mahasiswa</p></div>
+                    <br><br>
+                    <p class="grey-text text-darken-1">Rifqi Putra Bahalwan</p>
+                    <p class="grey-text text-darken-1">1406573974</p>
+                    <span class="material-icons pink-text text-darken-4">phone</span><i>-</i>
+                    <br>
+                    <i class="material-icons pink-text text-darken-4">email</i><i>-</i>
                 </div>
             </div>
         </div>

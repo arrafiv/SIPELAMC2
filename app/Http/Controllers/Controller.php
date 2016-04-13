@@ -110,6 +110,15 @@ class Controller extends BaseController
     {
         return view ('action/surat/createsurat');
     }
+    public function getdaftarsurat() 
+    {
+        return view ('action/surat/lihatSurat');
+    }
     
-    
+
+
+    public function getdaftaruser() 
+    {
+        return view ('action/menghapususer/menghapusUser');
+    }
 }

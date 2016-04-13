@@ -31,6 +31,10 @@ Route::get('/pengajuanijin/daftar-izin', 'Controller@getdaftarizin');
 #Menampilkan halaman surat
 Route::get('/surat', 'Controller@getsurat');
 
+Route::get('/surat/daftar-surat', 'Controller@getdaftarsurat');
+
+Route::get('/daftar-user', 'Controller@getdaftaruser');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

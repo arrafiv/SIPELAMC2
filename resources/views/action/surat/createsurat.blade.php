@@ -2,13 +2,13 @@
 
 @extends('elements.element')
 @section('isi-side-nav')
-<li><a href="#"><span class="pink-text text-darken-4">Buat Permohonan Surat</span></a></li>
-<li><a href="#"><span class="pink-text text-darken-4">Daftar Surat</span></a></li>
+<li><a href="{{action('Controller@getsurat')}}"><span class="pink-text text-darken-4">Buat Permohonan Surat</span></a></li>
+<li><a href="{{action('Controller@getdaftarsurat')}}"><span class="pink-text text-darken-4">Daftar Surat</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 @section('isi-sidebar-in-content')
-<li><a href="#"><span class="pink-text text-darken-4">Buat Permohonan Surat</span></a></li>
-<li><a href="#"><span class="pink-text text-darken-4">Daftar Surat</span></a></li>
+<li><a href="{{action('Controller@getsurat')}}"><span class="pink-text text-darken-4">Buat Permohonan Surat</span></a></li>
+<li><a href="{{action('Controller@getdaftarsurat')}}"><span class="pink-text text-darken-4">Daftar Surat</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 
