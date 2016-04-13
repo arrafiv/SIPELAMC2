@@ -21,7 +21,44 @@
         </div>
     </div>
     <div class="row">
-        <form class="col s12">
+        {!! Form::open(['url' => 'action/surat/createsurat']) !!}
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    {!! Form::select('tipe_surat', array('1' => 'Beasiswa', '2' => 'Transkrip Nilai'), null, ['class' => 'browser-default', 'placeholder' => 'Pilih salah satu surat']) !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 l8">
+                    {!! Form::textarea('keperluan', null, ['class' => 'materialize-textarea']) !!}
+                    {!! Form::label('keperluan', 'Keperluan Surat') !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 l4">
+                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz']) !!}
+                    {!! Form::label('email', 'Email') !!}
+                </div>
+                <div class="input-field col s12 l4">
+                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '08**********']) !!}
+                    {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
+                </div>
+            </div>
+            <button class="waves-effect waves-light btn pink darken-4">SUBMIT</button>
+        {!! Form::close() !!}
+
+
+
+<!-- <div class="row">
+                <div class="input-field col s12 m6">
+                        <select class="browser-default">
+                            <option value="" disabled selected>Pilih Kategori Surat</option>
+                            <option value="1">Beasiswa</option>
+                            <option value="2">Transkrip Nilai</option>
+                        </select>
+                </div>
+            </div> -->
+
+        <!-- <form class="col s12">
             <div class="row">
                 <div class="input-field col s12 l8">
                     <input placeholder="Isi nama" id="first_name" type="text" class="validate">
@@ -56,7 +93,7 @@
                 </div>
             </div>
 			
-            <a href="#" class="waves-effect waves-light btn pink darken-4">SUBMIT</a>
+            <a href="#" class="waves-effect waves-light btn pink darken-4">SUBMIT</a> -->
         </form>
     </div>
 </div>

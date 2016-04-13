@@ -15,56 +15,53 @@
 @section('content')
 <div class="main">
     <div class="row">
-<!--     <form action = "{{url('action/pengajuanijin/create') }}" method="POST" >
-    {!! csrf_field() !!} -->
         <div class="col s12 l8">
             <h4 class="grey-text text-darken-1">Pengajuan Ijin Kegiatan</h4>
             <div class="divider"></div>
         </div>
     </div>
     <div class="row">
-        <form class="col s12" action = "{{url('action/pengajuanijin/create') }}" method="POST" >
-            {!! csrf_field() !!}
+        {!! Form::open(['url' => 'action/pengajuanijin/create']) !!}
             <div class="row">
                 <div class="input-field col s12 l8">
-                    <input placeholder="Nama dari kegiatan yang diajukan" name="nama" id="first_name" type="text" class="validate">
-                    <label for="first_name">Nama Kegiatan</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 l8">
-                    <input placeholder="Organisasi yang menyelenggarakan" name="penyelenggara" id="first_name" type="text" class="validate">
-                    <label for="first_name">Pihak Penyelenggara</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 l4">
-                    <input type="date" name="tanggal_mulai_kegiatan" class="datepicker">
-                    <label>Tanggal Mulai Kegiatan</label>
-                </div>
-                <div class="input-field col s12 l4">
-                    <input type="date" name="tanggal_selesai_kegiatan" class="datepicker">
-                    <label>Tanggal Selesai Kegiatan</label>
+                    {!! Form::text('nama', null, ['class' => 'validate', 'placeholder' => 'Nama dari Kegiatan']) !!}
+                    {!! Form::label('nama', 'Nama Kegiatan') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                    <textarea id="textarea1" name="deskripsi" class="materialize-textarea"></textarea>
-                    <label for="textarea1">Deskripsi Kegiatan</label>
+                    {!! Form::text('penyelenggara', null, ['class' => 'validate', 'placeholder' => 'Organisasi yang menyelenggarakan']) !!}
+                    {!! Form::label('penyelenggara', 'Penyelenggara') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l4">
-                    <input placeholder="xxx@yyy.zzz"id="email" name="email" type="email" class="validate">
-                    <label for="email" data-error="wrong" data-success="right">Email</label>
+                    {!! Form::date('tanggal_mulai_kegiatan', null, ['class' => 'datepicker', 'placeholder' => 'Tanggal mulai']) !!}
+                    {!! Form::label('tanggal_mulai_kegiatan', 'Tanggal Mulai Kegiatan') !!}
                 </div>
                 <div class="input-field col s12 l4">
-                    <input id="icon_telephone" name="no_hp" type="tel" class="validate">
-                    <label for="icon_telephone">Telephone</label>
+                    {!! Form::date('tanggal_selesai_kegiatan', null, ['class' => 'datepicker', 'placeholder' => 'Tanggal selesai']) !!}
+                    {!! Form::label('tanggal_selesai_kegiatan', 'Tanggal Selesai Kegiatan') !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 l8">
+                    {!! Form::textarea('deskripsi', null, ['class' => 'materialize-textarea']) !!}
+                    {!! Form::label('deskripsi', 'Deskripsi') !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 l4">
+                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz']) !!}
+                    {!! Form::label('email', 'Email') !!}
+                </div>
+                <div class="input-field col s12 l4">
+                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '08**********']) !!}
+                    {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>
             <button class="waves-effect waves-light btn pink darken-4">SUBMIT</button>
-        </form>
+        {!! Form::close() !!}
     </div>
 </div>
 @endsection
@@ -78,6 +75,8 @@
   });
 </script>
 @endsection
+
+
 
 
 

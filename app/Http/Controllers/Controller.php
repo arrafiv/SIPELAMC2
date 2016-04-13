@@ -54,17 +54,6 @@ class Controller extends BaseController
     }
     public function createizin(Request $kegiatans)
     {
-        //$input = Input::all();
-            // $data = array (
-            // 'namakegiatan' => Input::get('namakegiatan'),
-            // 'penyelenggara' => Input::get('penyelenggara'),
-            // 'tglmulai' => Input::get('tglmulai'),
-            // 'tglselesai' => Input::get('tglselesai'),
-            // 'desckegiatan' => Input::get('desckegiatan'),
-            // 'email' => Input::get('email'),
-            // 'telepon' => Input::get('telepon'),
-            // );
-
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
@@ -76,25 +65,6 @@ class Controller extends BaseController
         $deskripsi=$input['deskripsi'];
         $email=$input['email'];
         $telepon=$input['no_hp'];
-
-        // $validasi = array(
-        //     'nama_kegiatan' => 'required|min:5',
-        //     'penyelenggara' => 'required',
-        //     'tanggal_mulai_kegiatan' => 'required',
-        //     'tanggal_selesai_kegiatan' => 'required',
-        //     'deskripsi' => 'required',
-        // );
-
-        // $pesan = array (
-
-        //     )
-
-        // $validasi = Validator::make($input, $aturan, $pesan);
-
-        // if($validasi-> fails()) {
-        //     return Redirect::back()->withErrors($validasi)->withInput();
-        // }
-
         DB::table('kegiatans')->insert(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]); //terusin
         return view ('action/pengajuanijin/create');
     }
@@ -109,6 +79,19 @@ class Controller extends BaseController
         $usernameSSO  = $user->username;
         $daftarizin = DB::table('kegiatans')->where('username', '=', $usernameSSO)->get();
         return view('action.pengajuanijin.daftarizin', compact('daftarizin'));
+    }
+    public function createsurat(Request $surat)
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $input = $surat->all();
+        $tipe_surat=$input['tipe_surat'];
+        $keperluan=$input['keperluan'];
+        $email=$input['email'];
+        $telepon=$input['no_hp'];
+        DB::table('pelayanan_akademiks')->insert(['tipe_surat' => $tipe_surat, 'keperluan' => $keperluan, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]); //terusin
+        return view ('action/surat/createsurat');
     }
     public function getsurat() 
     {
