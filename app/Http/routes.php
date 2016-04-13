@@ -17,11 +17,16 @@ Route::get('/', function () {
 
 Route::get('/login', 'Controller@loginsso');
 Route::get('/home', 'Controller@loginredirect');
+Route::get('/home', 'Controller@portaltohome');
 Route::get('/logout', 'Controller@logout');
 
-Route::get('/pengajuanijin', function () {
-    return view('action/pengajuanijin/ijin');
-});
+#halaman berisi form create pengajuan [localhost:8000/ijin]
+Route::get('/pengajuanijin', 'Controller@getCreateIzin'); 
+Route::post('action/pengajuanijin/create', 'Controller@createizin'); 
+#{return view('action/pengajuanijin/ijin'); });
+
+#Menampilkan daftar  izin
+Route::get('/pengajuanijin/daftar-izin', 'Controller@getdaftarizin');
 
 /*
 |--------------------------------------------------------------------------

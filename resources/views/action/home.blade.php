@@ -30,7 +30,7 @@
                             <div class="col s12 m6 l3" id="assethome"><img src="src/assethome-03.png">
                                 <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
-                            <div class="col s12 m6 l3" id="assethome"><img src="src/assethome-04.png">
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getCreateIzin')}}"><img src="src/assethome-04.png"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
                             </div>
                         </div>

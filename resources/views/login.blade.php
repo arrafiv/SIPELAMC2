@@ -70,7 +70,7 @@
         <div class="slider fullscreen">
             <ul class="slides">
                 <li>
-                    <img src="src/loginbackground.jpg">
+                    <img src="{{URL::to('src/loginbackground.jpg')}}">
                     <!-- random image -->
                     <div class="caption center-align">
                         <h3>This is our big Tagline!</h3>
@@ -78,7 +78,7 @@
                     </div>
                 </li>
                 <li>
-                    <img src="src/loginbackground.jpg">
+                    <img src="{{URL::to('src/loginbackground.jpg')}}">
                     <!-- random image -->
                     <div class="caption left-align">
                         <h3>Left Aligned Caption</h3>
@@ -86,7 +86,7 @@
                     </div>
                 </li>
                 <li>
-                    <img src="src/loginbackground.jpg">
+                    <img src="{{URL::to('src/loginbackground.jpg')}}">
                     <!-- random image -->
                     <div class="caption right-align">
                         <h3>Right Aligned Caption</h3>
@@ -94,7 +94,7 @@
                     </div>
                 </li>
                 <li>
-                    <img src="src/loginbackground.jpg">
+                    <img src="{{URL::to('src/loginbackground.jpg')}}">
                     <!-- random image -->
                     <div class="caption center-align">
                         <h3>This is our big Tagline!</h3>
@@ -107,7 +107,7 @@
     <div class="rightHalf">
         <nav>
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo left"><img src="src/fia_header.png"></a>
+                <a href="#" class="brand-logo left"><img src="{{URL::to('src/fia_header.png')}}"></a>
             </div>
         </nav>
         <div id="container">
