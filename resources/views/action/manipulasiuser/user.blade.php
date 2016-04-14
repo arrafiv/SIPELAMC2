@@ -57,7 +57,10 @@
                             </select>
                             <label>UBAH ROLE USER</label>
                           </div>
-                          <button class="waves-effect waves-light btn pink darken-4" id="buttonmodal">SUBMIT</button>
+                          <div class="row">
+                             <button class="waves-effect waves-light btn pink darken-4" id="buttonmodal">SUBMIT</button>
+                              <a class="modal-action modal-close btn grey darken-1" id="buttonmodal">Close</a>
+                          </div>
                         {!! Form::close() !!}
                         </div>
                       </div>

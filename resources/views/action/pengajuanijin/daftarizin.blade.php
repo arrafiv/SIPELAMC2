@@ -35,7 +35,7 @@
     <table class="highlight">
         <thead>
             <tr>
-            @if($usernameSSO === "kevin.mahendra")
+            @if($usernameSSO === "fadlurrahman.ar")
                 <th data-field="nama_kegiatan">Nama Kegiatan</th>
                 <th data-field="penyelenggara">Penyelenggara</th>
                 <th data-field="deskripsi">Deskripsi</th>
