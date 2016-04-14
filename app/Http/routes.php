@@ -67,6 +67,8 @@ Route::get('/surat/daftar-surat/{id}','Controller@hapussurat');
 #READ USER
 Route::get('/daftar-user', 'Controller@getuser');
 
+Route::post('/daftar-user/{username}', 'Controller@updaterole');
+
 
 
 

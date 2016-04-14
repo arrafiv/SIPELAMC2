@@ -217,9 +217,16 @@ class Controller extends BaseController
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
         $daftaruser = DB::table('users')->get();
-        return view('action/manipulasiuser/user', compact('daftaruser'));
+        $i = 0;
+        return view('action/manipulasiuser/user', compact('daftaruser', 'i'));
     }
-    
+    public function updaterole($username, Request $request)
+    {
+        $input = $request->all();
+        $role = $input['role'];
+        DB::table('users')->where('username', $username)->update(['role' => $role]);
+        return redirect('daftar-user');
+    }
 
 
 

@@ -116,7 +116,8 @@
                       </div>
                 
                     <div class=""><p class="pink-text text-darken-4">{!! $role !!}</p></div>
-                    <br><br>
+                    <br>
+                    <br>
                     <span class="grey-text text-darken-1"><i class="material-icons pink-text text-darken-4">phone</i>  {!! $no_hp !!}</span>
                     <br>
                     <span class="grey-text text-darken-1"><i class="material-icons pink-text text-darken-4">email</i>  {!! $email !!}</span>
