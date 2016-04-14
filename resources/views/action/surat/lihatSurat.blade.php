@@ -21,52 +21,26 @@
         </div>
     </div>
     <div class="row">
-        <form class="col s12">
             <div class="s12 m4 l8">
-                <table class="striped" style="font-size:80%;">    
+                <table class="highlight">
                     <thead>
-                      <tr>
-                          <th data-field="tipe" style="padding-right: 5em;">TipeSurat</th>
-                          <th data-field="nama" style="padding-right: 5em;">NamaPemohon</th>
-                          <th data-field="keperluan" style="padding-right: 5em;">Keperluan Surat</th>
-                          <th data-field="status">Status</th>
-                          
-                      </tr>
+                        <tr>
+                            <th data-field="tipe_surat">Tipe Surat</th>
+                            <th data-field="keperluan">Keperluan</th>
+                            <th data-field="status">Status</th>
+                        </tr>
                     </thead>
-
                     <tbody>
+                        @foreach($surat as $suratt)
                         <tr>
-                            <td>Surat Magang</td>
-                            <td>Rifqi P. Bahalwan</td>
-                            <td style="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
-                            <td>Selesai</td>
-                            <td><a class="btn-flat disabled"><i class="material-icons">mode_edit</i></a></td>
+                            <td>{{$suratt->tipe_surat}}</td>
+                            <td>{{$suratt->keperluan}}</td>
+                            <td>{{$suratt->status}}</td>
                         </tr>
-                        <tr>
-                            <td>Transkrip Nilai</td>
-                            <td>Rifqi P. Bahalwan</td>
-                            <td style="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
-                            <td>Selesai</td>
-                            <td><a class="btn-flat disabled"><i class="material-icons">mode_edit</i></a></td>
-                        </tr>
-                        <tr>
-                            <td>Transkrip Nilai</td>
-                            <td>Rifqi P. Bahalwan</td>
-                            <td style="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
-                            <td>Menunggu</td>
-                            <td><a class="waves-effect waves-teal btn-flat"><i class="material-icons">mode_edit</i></a></td>
-                        </tr>
-                        <tr>
-                            <td>Transkrip Nilai</td>
-                            <td>Rifqi P. Bahalwan</td>
-                            <td style="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
-                            <td>Menunggu</td>
-                            <td><a class="waves-effect waves-teal btn-flat"><i class="material-icons">mode_edit</i></a></td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-          </form>
     </div>
 </div>
 @endsection

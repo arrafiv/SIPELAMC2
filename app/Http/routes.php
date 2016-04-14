@@ -18,23 +18,31 @@ Route::get('/', function () {
 Route::get('/login', 'Controller@loginsso');
 Route::get('/home', 'Controller@loginredirect');
 Route::get('/home2', 'Controller@portaltohome');
+Route::get('/admin', 'Controller@portaltohomeadmin');
 Route::get('/logout', 'Controller@logout');
 
-#halaman berisi form create pengajuan [localhost:8000/ijin]
-Route::get('/pengajuanijin', 'Controller@getCreateIzin'); 
+#halaman berisi form create pengajuan [localhost:8000/pengajuanijin]
+Route::get('/pengajuanijin', 'Controller@getcreateizin'); 
 Route::post('action/pengajuanijin/create', 'Controller@createizin'); 
 #{return view('action/pengajuanijin/ijin'); });
 
-#Menampilkan daftar  izin
+#Menampilkan daftar izin
 Route::get('/pengajuanijin/daftar-izin', 'Controller@getdaftarizin');
+Route::get('/pengajuanijin/daftar-izin-admin', 'Controller@getdaftarizinadmin');
 
-#Menampilkan halaman surat
+#form create new surat
 Route::get('/surat', 'Controller@getsurat');
 Route::post('/action/surat/createsurat', 'Controller@createsurat');
 
+#Menampilkan daftar surat
 Route::get('/surat/daftar-surat', 'Controller@getdaftarsurat');
 
-Route::get('/daftar-user', 'Controller@getdaftaruser');
+#Menampilkan daftar user
+Route::get('/daftar-user', 'Controller@getuser');
+
+#Ubah data user : mahasiswa
+Route::post('/action/home', 'Controller@updatemahasiswa');
+
 
 /*
 |--------------------------------------------------------------------------

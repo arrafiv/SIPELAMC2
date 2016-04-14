@@ -24,7 +24,7 @@
         {!! Form::open(['url' => 'action/surat/createsurat']) !!}
             <div class="row">
                 <div class="input-field col s12 m6">
-                    {!! Form::select('tipe_surat', array('1' => 'Beasiswa', '2' => 'Transkrip Nilai'), null, ['class' => 'browser-default', 'placeholder' => 'Pilih salah satu surat']) !!}
+                    {!! Form::select('tipe_surat', array('Beasiswa' => 'Beasiswa', 'Transkrip Nilai' => 'Transkrip Nilai'), null, ['class' => 'browser-default', 'placeholder' => 'Pilih salah satu surat']) !!}
                 </div>
             </div>
             <div class="row">

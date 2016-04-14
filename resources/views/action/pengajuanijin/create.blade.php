@@ -2,12 +2,12 @@
 
 @extends('elements.element')
 @section('isi-side-nav')
-<li><a href="{{action('Controller@getCreateIzin')}}"><span class="pink-text text-darken-4">Buat Pengajuan Ijin</span></a></li>
+<li><a href="{{action('Controller@getcreateizin')}}"><span class="pink-text text-darken-4">Buat Pengajuan Ijin</span></a></li>
 <li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Ijin Kegiatan</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 @section('isi-sidebar-in-content')
-<li><a href="{{action('Controller@getCreateIzin')}}"><span class="pink-text text-darken-4">Buat Pengajuan Ijin</span></a></li>
+<li><a href="{{action('Controller@getcreateizin')}}"><span class="pink-text text-darken-4">Buat Pengajuan Ijin</span></a></li>
 <li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Ijin Kegiatan</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection

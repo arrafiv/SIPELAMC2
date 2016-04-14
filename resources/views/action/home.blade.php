@@ -13,7 +13,6 @@
     }
 </style>
 @endsection @extends('elements.element') @section('content')
-<div>
     <div class="row" id="row">
         <div class="col s12 l9">
             <ul class="collapsible popout" data-collapsible="accordion">
@@ -21,16 +20,16 @@
                     <div class="collapsible-header active">Sistem Pelayanan Mahasiswa</div>
                     <div class="collapsible-body">
                         <div class="row center-align">
-                            <div class="col s12 m6 l3" id="assethome"><img src="src/assethome-01.png">
+                            <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-01.png')}}">
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
-                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getsurat')}}"><img src="src/assethome-02.png"></a>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getsurat')}}"><img src="{{URL::to('src/assethome-02.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pelayanan Akademik Surat</span></div>
                             </div>
-                            <div class="col s12 m6 l3" id="assethome"><img src="src/assethome-03.png">
+                            <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-03.png')}}">
                                 <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
-                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getCreateIzin')}}"><img src="src/assethome-04.png"></a>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getcreateizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
                             </div>
                         </div>
@@ -53,18 +52,45 @@
         <div class="col s12 l3">
             <div class="card blue-grey lighten-5">
                 <div class="card-content white">
-                    <span class="grey-text text-darken-1">rifqi.putra42</span><i class="material-icons right">mode_edit</i>
-                    <div class=""><p class="pink-text text-darken-4">Mahasiswa</p></div>
+                    <span class="grey-text text-darken-1">{!! $username !!}</span>
+
+                     <!-- Modal Trigger -->
+                      <a class="modal-trigger" href="#modal1">
+                        <i class="material-icons pink-text text-darken-4 right">mode_edit</i>
+                      </a>
+                      <!-- Modal Structure -->
+                      <div id="modal1" class="modal">
+                        <div class="modal-content">
+                          {!! Form::open(['url' => 'action/home']) !!}
+                            <div class="row">
+                                <div class="input-field col s12 l4">
+                                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz']) !!}
+                                    {!! Form::label('email', 'Email') !!}
+                                </div>
+                                <div class="input-field col s12 l4">
+                                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '08**********']) !!}
+                                    {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="waves-effect waves-light btn pink darken-4">SUBMIT</button>
+                                <button class="modal-action modal-close btn grey darken-1">Close</button>
+                            </div>
+                            
+                        {!! Form::close() !!}
+                        </div>
+                      </div>
+                
+                    <div class=""><p class="pink-text text-darken-4">{!! $role !!}</p></div>
                     <br><br>
-                    <p class="grey-text text-darken-1">Rifqi Putra Bahalwan</p>
-                    <p class="grey-text text-darken-1">1406573974</p>
-                    <span class="material-icons pink-text text-darken-4">phone</span><i>-</i>
+                    <span class="grey-text text-darken-1"><i class="material-icons pink-text text-darken-4">phone</i>  {!! $no_hp !!}</span>
                     <br>
-                    <i class="material-icons pink-text text-darken-4">email</i><i>-</i>
+                    <span class="grey-text text-darken-1"><i class="material-icons pink-text text-darken-4">email</i>  {!! $email !!}</span>
                 </div>
             </div>
         </div>
     </div>
+
 
     @endsection @section('script')
     <script>
@@ -73,6 +99,7 @@
             full_width: true
         });
         $(".button-collapse").sideNav();
+        $('.modal-trigger').leanModal();
     });
     </script>
     @endsection

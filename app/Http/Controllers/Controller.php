@@ -5,6 +5,8 @@ require '../vendor/autoload.php';
 use SSO\SSO;
 use App\users;
 use App\kegiatans;
+use App\mahasiswas;
+use App\staffs;
 use DB;
 
 use App\Http\Requests;
@@ -28,18 +30,40 @@ class Controller extends BaseController
         $result = DB::table('users')->where('username', '=', $usernameSSO)->count();
         
         if ($bol == true){
-            if($usernameSSO == "fadlurrahman.ar"){
+            if($usernameSSO == "fadlurrahman.ar"){ //admin
                 return view('action.admin');
-            }else{
-            if($result == 0)
-                {
-                    $newUser = new users;
-                    $newUser->username = $usernameSSO;
-                    $newUser->nama = $nameSSO;
-                    $newUser->role = $roleSSO;
-                    $newUser->save();
-                }
-            return view('action.home');
+            }
+            else{
+                if($result == 0)
+                    {
+                        # MENAMBAHKAN USER BARU
+                        $newUser = new users;
+                        $newUser->username = $usernameSSO;
+                        $newUser->nama = $nameSSO;
+                        $newUser->role = $roleSSO;
+                        $newUser->save();
+
+                        # MENAMBAHKAN MAHASISWA
+                        if($newUser->role == "mahasiswa")
+                        {
+                            $newMahasiswa = new mahasiswas;
+                            $newMahasiswa->username = $newUser->username;
+                            $newMahasiswa->npm = $user->npm;
+                            $newMahasiswa->save();
+                        }
+
+                         # MENAMBAHKAN STAFF
+                        else
+                        {
+                            $newStaff = new staffs;
+                            $newStaff->username = $newUser->username;
+                            $newStaff->nip = $user->nip;
+                            $newStaff->save();
+                        }
+                    }
+                $email = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('email');
+                $no_hp = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('no_hp');
+                return view('action.home', ['username' => $usernameSSO, 'role' => $roleSSO, 'email' => $email, 'no_hp' => $no_hp]);
             }
         }
     }
@@ -50,7 +74,21 @@ class Controller extends BaseController
     }
     public function portaltohome()
     {
-        return view('action.home');
+        return redirect('home');
+    }
+    public function portaltohomeadmin()
+    {
+        return view('action.admin');
+    }
+    public function updatemahasiswa(Request $updateanmahasiswa)
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $input = $updateanmahasiswa->all();
+        $email=$input['email'];
+        $telepon=$input['no_hp'];
+        DB::table('mahasiswas')->where('username', $user->username)->update(['email' => $email, 'no_hp' => $telepon]);
+        return redirect('home');
     }
     public function createizin(Request $kegiatans)
     {
@@ -68,7 +106,7 @@ class Controller extends BaseController
         DB::table('kegiatans')->insert(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]); //terusin
         return view ('action/pengajuanijin/create');
     }
-    public function getCreateIzin() 
+    public function getcreateizin() 
     {
         return view ('action/pengajuanijin/create');
     }
@@ -99,11 +137,28 @@ class Controller extends BaseController
     }
     public function getdaftarsurat() 
     {
-        return view ('action/surat/lihatSurat');
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $surat = DB::table('pelayanan_akademiks')->where('username', '=', $usernameSSO)->get();
+        return view('action.surat.lihatSurat', compact('surat'));
     }
-    
-
-
+    public function getdaftarizinadmin()
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $daftarizinadmin = DB::table('kegiatans')->get();
+        return view('action.pengajuanijin.daftarizinadmin', compact('daftarizinadmin'));
+    }
+    public function getuser() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $daftaruser = DB::table('users')->get();
+        return view('action/user', compact('daftaruser'));
+    }
     public function getdaftaruser() 
     {
         return view ('action/menghapususer/menghapusUser');
