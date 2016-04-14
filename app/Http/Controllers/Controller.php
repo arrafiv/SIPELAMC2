@@ -7,6 +7,7 @@ use App\users;
 use App\kegiatans;
 use App\mahasiswas;
 use App\staffs;
+use App\pelayanan_akademiks;
 use DB;
 
 use App\Http\Requests;
@@ -19,6 +20,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+
+#----------------------------LOGINLOGOUT TO PORTAL-------------------------------------
+
     public function loginredirect()
     {
         $bol = SSO::authenticate();
@@ -30,10 +35,6 @@ class Controller extends BaseController
         $result = DB::table('users')->where('username', '=', $usernameSSO)->count();
         
         if ($bol == true){
-            if($usernameSSO == "fadlurrahman.ar"){ //admin
-                return view('action.admin');
-            }
-            else{
                 if($result == 0)
                     {
                         # MENAMBAHKAN USER BARU
@@ -64,7 +65,6 @@ class Controller extends BaseController
                 $email = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('email');
                 $no_hp = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('no_hp');
                 return view('action.home', ['username' => $usernameSSO, 'role' => $roleSSO, 'email' => $email, 'no_hp' => $no_hp]);
-            }
         }
     }
     public function logout()
@@ -76,10 +76,11 @@ class Controller extends BaseController
     {
         return redirect('home');
     }
-    public function portaltohomeadmin()
-    {
-        return view('action.admin');
-    }
+
+
+#----------------------------UPDATE PROFILE-------------------------------------
+
+
     public function updatemahasiswa(Request $updateanmahasiswa)
     {
         $bol = SSO::authenticate();
@@ -90,6 +91,12 @@ class Controller extends BaseController
         DB::table('mahasiswas')->where('username', $user->username)->update(['email' => $email, 'no_hp' => $telepon]);
         return redirect('home');
     }
+
+
+
+#----------------------------PENGAJUAN IZIN-------------------------------------
+
+
     public function createizin(Request $kegiatans)
     {
         $bol = SSO::authenticate();
@@ -98,8 +105,8 @@ class Controller extends BaseController
         $input = $kegiatans->all();
         $nama_kegiatan=$input['nama'];
         $penyelenggara=$input['penyelenggara'];
-        $tanggal_mulai_kegiatan=$input['tanggal_mulai_kegiatan'];
-        $tanggal_selesai_kegiatan=$input['tanggal_selesai_kegiatan'];
+        $tanggal_mulai_kegiatan = date_create($input['tanggal_mulai_kegiatan']); 
+        $tanggal_selesai_kegiatan = date_create($input['tanggal_selesai_kegiatan']);
         $deskripsi=$input['deskripsi'];
         $email=$input['email'];
         $telepon=$input['no_hp'];
@@ -116,8 +123,38 @@ class Controller extends BaseController
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
         $daftarizin = DB::table('kegiatans')->where('username', '=', $usernameSSO)->get();
-        return view('action.pengajuanijin.daftarizin', compact('daftarizin'));
+        $daftarizinsekre = DB::table('kegiatans')->join('users', 'users.username', '=', 'kegiatans.username')->get();
+        return view('action.pengajuanijin.daftarizin', compact('daftarizin', 'daftarizinsekre', 'usernameSSO'));
     }
+    public function editizin($id)
+    {
+        $izin = kegiatans::findOrFail($id);
+        return view('action.pengajuanijin.editizin', compact('izin'));
+    }
+    public function updateizin($id, Request $request)
+    {
+        $izin = kegiatans::findOrFail($id);
+        $input = $request->all();
+        $nama_kegiatan=$input['nama_kegiatan'];
+        $penyelenggara=$input['penyelenggara'];
+        $tanggal_mulai_kegiatan = date_create($input['tanggal_mulai_kegiatan']); 
+        $tanggal_selesai_kegiatan = date_create($input['tanggal_selesai_kegiatan']);
+        $deskripsi=$input['deskripsi'];
+        $email=$input['email'];
+        $telepon=$input['no_hp'];
+        DB::table('kegiatans')->where('id', $id)->update(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon]);
+        return redirect('pengajuanijin/daftar-izin');
+    }
+    public function hapusizin($id)
+    {
+        DB::table('kegiatans') -> where('id','=', $id) -> delete();
+        return redirect ('pengajuanijin/daftar-izin');
+    }
+
+
+#----------------------------SURAT------------------------------------------
+
+
     public function createsurat(Request $surat)
     {
         $bol = SSO::authenticate();
@@ -140,27 +177,50 @@ class Controller extends BaseController
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
+
+        // SURAT MAHASISWA
         $surat = DB::table('pelayanan_akademiks')->where('username', '=', $usernameSSO)->get();
-        return view('action.surat.lihatSurat', compact('surat'));
+
+        // SURAT SEKRETARIAT
+        $suratsekretariat = DB::table('pelayanan_akademiks')->join('users', 'users.username', '=', 'pelayanan_akademiks.username' )->get();
+        // $usernamesurat = $suratsekretariat->username;
+        // $namapanjang = DB::table('users')->where('username', '=', $usernamesurat)->value('nama');
+
+        return view('action.surat.lihatSurat', compact('surat', 'suratsekretariat', 'usernameSSO'));
     }
-    public function getdaftarizinadmin()
+    public function editsurat($id)
     {
-        $bol = SSO::authenticate();
-        $user = SSO::getUser();
-        $usernameSSO  = $user->username;
-        $daftarizinadmin = DB::table('kegiatans')->get();
-        return view('action.pengajuanijin.daftarizinadmin', compact('daftarizinadmin'));
+        $surat = pelayanan_akademiks::findOrFail($id);
+        return view('action.surat.editsurat', compact('surat'));
     }
+    public function updatesurat($id, Request $request)
+    {
+        $surat = pelayanan_akademiks::findOrFail($id);
+        $surat->update($request->all());
+        return redirect('surat/daftar-surat');
+    }
+    public function hapussurat($id)
+    {
+        DB::table('pelayanan_akademiks') -> where('id','=', $id) -> delete();
+        return redirect ('surat/daftar-surat');
+    }
+
+
+
+
+#----------------------------MANIPULASI USER------------------------------------------
+
+    
     public function getuser() 
     {
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
         $daftaruser = DB::table('users')->get();
-        return view('action/user', compact('daftaruser'));
+        return view('action/manipulasiuser/user', compact('daftaruser'));
     }
-    public function getdaftaruser() 
-    {
-        return view ('action/menghapususer/menghapusUser');
-    }
+    
+
+
+
 }

@@ -1,6 +1,6 @@
 @extends('layouts.mastercontent')
 
-@extends('elements.elementadmin')
+@extends('elements.element')
 @section('isi-side-nav')
 <li><a href="{{action('Controller@getuser')}}"><span class="pink-text text-darken-4">User</span></a></li>
 @endsection

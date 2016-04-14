@@ -15,33 +15,59 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/login', 'Controller@loginsso');
+#--------------LOGINLOGOUT & TO PORTAL
+
 Route::get('/home', 'Controller@loginredirect');
+Route::get('/logout', 'Controller@logout');
 Route::get('/home2', 'Controller@portaltohome');
 Route::get('/admin', 'Controller@portaltohomeadmin');
-Route::get('/logout', 'Controller@logout');
 
-#halaman berisi form create pengajuan [localhost:8000/pengajuanijin]
+#------------------UPDATE PROFILE
+
+Route::post('/action/home', 'Controller@updatemahasiswa');
+
+
+#------------------PENGAJUAN IJIN
+
+#CREATE IZIN
 Route::get('/pengajuanijin', 'Controller@getcreateizin'); 
-Route::post('action/pengajuanijin/create', 'Controller@createizin'); 
-#{return view('action/pengajuanijin/ijin'); });
+Route::post('action/pengajuanijin/create', 'Controller@createizin');
 
-#Menampilkan daftar izin
+#READ IZIN
 Route::get('/pengajuanijin/daftar-izin', 'Controller@getdaftarizin');
 Route::get('/pengajuanijin/daftar-izin-admin', 'Controller@getdaftarizinadmin');
 
-#form create new surat
+#UPDATE IZIN
+Route::get('/pengajuanijin/{id}/edit', 'Controller@editizin');
+Route::post('/pengajuanijin/{id}/edit', 'Controller@updateizin');
+
+#DELETE IZIN
+Route::get('/pengajuanijin/daftar-izin/{id}','Controller@hapusizin');
+
+
+#-----------------------SURAT
+
+#CREATE SURAT
 Route::get('/surat', 'Controller@getsurat');
 Route::post('/action/surat/createsurat', 'Controller@createsurat');
 
-#Menampilkan daftar surat
+#READ SURAT
 Route::get('/surat/daftar-surat', 'Controller@getdaftarsurat');
 
-#Menampilkan daftar user
+#UPDATE SURAT
+Route::get('/surat/{id}/edit', 'Controller@editsurat');
+Route::post('/surat/{id}/edit', 'Controller@updatesurat');
+
+#DELETE SURAT
+Route::get('/surat/daftar-surat/{id}','Controller@hapussurat');
+
+
+#-----------------------USER (OLEH ADMIN)
+
+#READ USER
 Route::get('/daftar-user', 'Controller@getuser');
 
-#Ubah data user : mahasiswa
-Route::post('/action/home', 'Controller@updatemahasiswa');
+
 
 
 /*
