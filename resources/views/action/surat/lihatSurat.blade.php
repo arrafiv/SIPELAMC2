@@ -1,19 +1,34 @@
 @extends('layouts.mastercontent')
 
 @extends('elements.element')
+
+@section('styles')
+<style type="text/css">
+    #buttonmodal{
+        margin-top: 10em;
+    }
+</style>
+@endsection
+
 @section('isi-side-nav')
-@if($usernameSSO === "kevin.mahendra")
+@if($roledatabase === "mahasiswa")
 <li><a href="{{action('Controller@getsurat')}}"><span class="pink-text text-darken-4">Buat Permohonan Surat</span></a></li>
 @endif
 <li><a href="{{action('Controller@getdaftarsurat')}}"><span class="pink-text text-darken-4">Daftar Surat</span></a></li>
+@if($roledatabase === "sekretariat")
+<li><a href="{{action('Controller@getdaftarsuratselesai')}}"><span class="pink-text text-darken-4">Daftar Surat Selesai</span></a></li>
+@endif
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 
 @section('isi-sidebar-in-content')
-@if($usernameSSO === "kevin.mahendra")
+@if($roledatabase === "mahasiswa")
 <li><a href="{{action('Controller@getsurat')}}"><span class="pink-text text-darken-4">Buat Permohonan Surat</span></a></li>
 @endif
 <li><a href="{{action('Controller@getdaftarsurat')}}"><span class="pink-text text-darken-4">Daftar Surat</span></a></li>
+@if($roledatabase === "sekretariat")
+<li><a href="{{action('Controller@getdaftarsuratselesai')}}"><span class="pink-text text-darken-4">Daftar Surat Selesai</span></a></li>
+@endif
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 
@@ -27,25 +42,25 @@
     </div>
     <div class="row">
             <div class="s12 m4 l8">
-                <table class="highlight">
+                <table id="example" class="bordered highlight" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                        @if ($usernameSSO === "kevin.mahendra")
+                        @if ($roledatabase === "mahasiswa")
                             <th data-field="tipe_surat">Tipe Surat</th>
                             <th data-field="keperluan">Keperluan</th>
                             <th data-field="status">Status</th>
-                            <th class="center-align" data-field="action">Action</th>
-                        @elseif ($usernameSSO === "rafida.fatimatuzzahra")
+                            <th data-field="action"></th>
+                        @elseif ($roledatabase === "sekretariat")
                             <th data-field="nama">Nama</th>
                             <th data-field="tipe_surat">Tipe Surat</th>
                             <th data-field="keperluan">Keperluan</th>
                             <th data-field="status">Status</th>
-                            <th class="center-align" data-field="action">Action</th>
+                            <th data-field="action"></th>
                         @endif
                         </tr>
                     </thead>
                     <tbody>
-                    @if($usernameSSO === "kevin.mahendra")
+                    @if($roledatabase === "mahasiswa")
                         @foreach($surat as $suratt)
                         <tr>
                             <td>{{$suratt->tipe_surat}}</td>
@@ -72,7 +87,7 @@
                             </td>
                         </tr>
                         @endforeach
-                    @elseif ($usernameSSO === "rafida.fatimatuzzahra")
+                    @elseif ($roledatabase === "sekretariat")
                         @foreach($suratsekretariat as $suratt)
                         <tr>
                             <td>{{$suratt->nama}}</td>
@@ -81,10 +96,27 @@
                             <td>{{$suratt->status}}</td>
                             <td>
                                 <div class="center-align">
-                                    <i class="material-icons pink-text text-darken-4">swap_vert</i>
+                                    <a class="modal-trigger btn-flat" data-target="{{$i}}"><i class="material-icons pink-text text-darken-4">swap_vert</i></a>
                                 </div>
+                                <div id="{{$i++}}" class="modal">
+                                    <div class="modal-content">
+                                      {!! Form::model($suratt, ['action' => ['Controller@updatestatussurat', $suratt->id]]) !!}
+                                        <div class="input-field col s12">
+                                        <select name="status" >
+                                          <option value="" disabled selected>Choose your option</option>
+                                          <option value="Diproses">Diproses</option>
+                                          <option value="Selesai">Selesai</option>
+                                        </select>
+                                        <label>UBAH STATUS SURAT</label>
+                                      </div>
+                                      <div class="row">
+                                         <button class="waves-effect waves-light btn pink darken-4" id="buttonmodal">SUBMIT</button>
+                                          <a class="modal-action modal-close btn grey darken-1" id="buttonmodal">Close</a>
+                                      </div>
+                                    {!! Form::close() !!}
+                                    </div>
+                                  </div>
                             </td>
-                        </tr>
                         @endforeach
                     @endif
                     </tbody>
@@ -94,8 +126,19 @@
 </div>
 @endsection
 
+@if ($roledatabase === "mahasiswa")
 @section('script')
 <script>
+    $(document).ready(function() {
+            $('#example').DataTable( {
+                columnDefs: [
+                    {
+                        targets: [ 0, 1, 2 ],
+                        className: 'mdl-data-table__cell--non-numeric'
+                    }
+                ]
+            } );
+        } );
     $(".button-collapse").sideNav();
     $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
@@ -103,3 +146,27 @@
   });
 </script>
 @endsection
+
+@elseif ($roledatabase === "sekretariat")
+@section('script')
+<script>
+    $(document).ready(function() {
+            $('#example').DataTable( {
+                columnDefs: [
+                    {
+                        targets: [ 0, 1, 2, 3, 4 ],
+                        className: 'mdl-data-table__cell--non-numeric'
+                    }
+                ]
+            } );
+        } );
+    $(".button-collapse").sideNav();
+    $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+  });
+    $('.modal-trigger').leanModal();
+    $('select').material_select();
+</script>
+@endsection
+@endif

@@ -25,13 +25,13 @@
         </div>
     </div>
     <div class="row">
-    <table class="highlight">
+    <table id="example" class="bordered highlight" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th data-field="username">Username</th>
                 <th data-field="nama">Nama</th>
                 <th data-field="role">Role</th>
-                <th class="center-align" data-field="role">Action</th>
+                <th data-field="action"></th>
             </tr>
         </thead>
         <tbody>
@@ -75,6 +75,16 @@
 
 @section('script')
 <script>
+    $(document).ready(function() {
+            $('#example').DataTable( {
+                columnDefs: [
+                    {
+                        targets: [ 0, 1, 2 ],
+                        className: 'mdl-data-table__cell--non-numeric'
+                    }
+                ]
+            } );
+        } );
     $(".button-collapse").sideNav();
     $('.dropdown-button').dropdown({
           inDuration: 300,

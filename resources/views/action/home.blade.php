@@ -22,13 +22,13 @@
                         <div class="row center-align">
 
                             <!-- ADMIN -->
-                            @if ($username === "kevin.mahendra")
+                            @if ($role === "admin")
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getuser')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">User Manager</span></div>
                             </div>
 
                             <!-- SEKRETARIAT -->
-                            @elseif ($username === "rafida.fatimatuzzahra")
+                            @elseif ($role === "sekretariat")
                             <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-01.png')}}">
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
@@ -40,14 +40,14 @@
                             </div>
 
                             <!-- MANAJER -->
-                            @elseif ($username === "rifqi.putra42")
+                            @elseif ($role === "manajer akademik")
                             <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-01.png')}}">
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-03.png')}}">
                                 <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
-                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getcreateizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
                             </div>
 

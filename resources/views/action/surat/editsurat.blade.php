@@ -24,7 +24,7 @@
         {!! Form::model($surat, ['action' => ['Controller@updatesurat', $surat->id]]) !!}
             <div class="row">
                 <div class="input-field col s12 m6">
-                    {!! Form::select('tipe_surat', array('Beasiswa' => 'Beasiswa', 'Transkrip Nilai' => 'Transkrip Nilai'), null, ['class' => 'browser-default', 'placeholder' => 'Pilih salah satu surat']) !!}
+                    {!! Form::select('tipe_surat', array('Beasiswa' => 'Beasiswa', 'Transkrip Nilai' => 'Transkrip Nilai'), null, ['placeholder' => 'Pilih salah satu surat']) !!}
                 </div>
             </div>
             <div class="row">
@@ -57,6 +57,7 @@
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15 // Creates a dropdown of 15 years to control year
   });
+    $('select').material_select();
 </script>
 @endsection
 

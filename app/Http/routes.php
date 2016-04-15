@@ -35,11 +35,13 @@ Route::post('action/pengajuanijin/create', 'Controller@createizin');
 
 #READ IZIN
 Route::get('/pengajuanijin/daftar-izin', 'Controller@getdaftarizin');
-Route::get('/pengajuanijin/daftar-izin-admin', 'Controller@getdaftarizinadmin');
+Route::get('/pengajuanijin/daftar-izin-selesai', 'Controller@getdaftarizinselesai');
+Route::get('/pengajuanijin/list-daftar-izin', 'Controller@getdaftarizinlist');
 
 #UPDATE IZIN
 Route::get('/pengajuanijin/{id}/edit', 'Controller@editizin');
 Route::post('/pengajuanijin/{id}/edit', 'Controller@updateizin');
+Route::post('/pengajuanijin/{id}/edit', 'Controller@updatestatusizin');
 
 #DELETE IZIN
 Route::get('/pengajuanijin/daftar-izin/{id}','Controller@hapusizin');
@@ -53,10 +55,12 @@ Route::post('/action/surat/createsurat', 'Controller@createsurat');
 
 #READ SURAT
 Route::get('/surat/daftar-surat', 'Controller@getdaftarsurat');
+Route::get('/surat/daftar-surat-selesai', 'Controller@getdaftarsuratselesai');
 
 #UPDATE SURAT
 Route::get('/surat/{id}/edit', 'Controller@editsurat');
 Route::post('/surat/{id}/edit', 'Controller@updatesurat');
+Route::post('/surat/{id}/edit', 'Controller@updatestatussurat');
 
 #DELETE SURAT
 Route::get('/surat/daftar-surat/{id}','Controller@hapussurat');
