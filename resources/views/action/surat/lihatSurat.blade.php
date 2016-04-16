@@ -47,15 +47,14 @@
                         <tr>
                         @if ($roledatabase === "mahasiswa")
                             <th data-field="tipe_surat">Tipe Surat</th>
-                            <th data-field="keperluan">Keperluan</th>
+                            <th data-field="waktu">Tanggal Pembuatan</th>
                             <th data-field="status">Status</th>
-                            <th data-field="action"></th>
+                            <th class="center-align" data-field="action">Action</th>
                         @elseif ($roledatabase === "sekretariat")
                             <th data-field="nama">Nama</th>
                             <th data-field="tipe_surat">Tipe Surat</th>
-                            <th data-field="keperluan">Keperluan</th>
                             <th data-field="status">Status</th>
-                            <th data-field="action"></th>
+                            <th class="center-align" data-field="action">Action</th>
                         @endif
                         </tr>
                     </thead>
@@ -64,13 +63,13 @@
                         @foreach($surat as $suratt)
                         <tr>
                             <td>{{$suratt->tipe_surat}}</td>
-                            <td>{{$suratt->keperluan}}</td>
+                            <td>{{$suratt->created_at}}</td>
                             <td>{{$suratt->status}}</td>
                             <td>
                                 <div class="center-align">
                                     @if($suratt->status === "Belum Diproses")
                                     <a href="{{action('Controller@editsurat', $suratt->id)}}">
-                                        <i class="material-icons pink-text text-darken-4">mode_edit</i>
+                                        <i class="material-icons pink-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit">mode_edit</i>
                                     </a>
                                     @else
                                         <i class="material-icons grey-text text-darken-2">mode_edit</i>
@@ -78,12 +77,29 @@
 
                                     @if($suratt->status === "Belum Diproses")
                                         <a href="{{action('Controller@hapussurat', $suratt->id)}}">
-                                            <i class="material-icons pink-text text-darken-4">delete</i>
+                                            <i class="material-icons pink-text text-darken-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Delete">delete</i>
                                         </a>
                                     @else
                                         <i class="material-icons grey-text text-darken-2">delete</i>
                                     @endif
+                                    <a href class="modal-trigger" data-target="{{$j}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Info">info_outline</i></a>
                                 </div>
+                                <!-- Modal Structure For Details-->
+                                  <div id="{{$j++}}" class="modal modal-fixed-footer">
+                                    <div class="modal-content">
+                                      <h4>{{$suratt->tipe_surat}}</h4>
+                                      <div class="divider"></div>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Keperluan</h6>
+                                      <p>{{$suratt->keperluan}}</p>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Kontak</h6>
+                                      <p>{{$suratt->email}} | {{$suratt->no_hp}}</p> 
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
+                                    </div>
+                                  </div> 
                             </td>
                         </tr>
                         @endforeach
@@ -92,11 +108,11 @@
                         <tr>
                             <td>{{$suratt->nama}}</td>
                             <td>{{$suratt->tipe_surat}}</td>
-                            <td>{{$suratt->keperluan}}</td>
                             <td>{{$suratt->status}}</td>
                             <td>
                                 <div class="center-align">
-                                    <a class="modal-trigger btn-flat" data-target="{{$i}}"><i class="material-icons pink-text text-darken-4">swap_vert</i></a>
+                                    <a href class="modal-trigger" data-target="{{$i}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Update">swap_vert</i></a>
+                                    <a href class="modal-trigger" data-target="{{$j}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Info">info_outline</i></a>
                                 </div>
                                 <div id="{{$i++}}" class="modal">
                                     <div class="modal-content">
@@ -116,6 +132,29 @@
                                     {!! Form::close() !!}
                                     </div>
                                   </div>
+
+                                  <!-- Modal Structure For Details-->
+                                  <div id="{{$j++}}" class="modal modal-fixed-footer">
+                                    <div class="modal-content">
+                                      <h4>{{$suratt->nama}}</h4>
+                                      <div class="divider"></div>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">NPM</h6>
+                                      <p>{{$suratt->npm}}</p>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Tipe Surat</h6>
+                                      <p>{{$suratt->tipe_surat}}</p>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Keperluan</h6>
+                                      <p>{{$suratt->keperluan}}</p>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Kontak</h6>
+                                      <p>{{$suratt->email}} | {{$suratt->no_hp}}</p> 
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
+                                    </div>
+                                  </div>
                             </td>
                         @endforeach
                     @endif
@@ -133,7 +172,7 @@
             $('#example').DataTable( {
                 columnDefs: [
                     {
-                        targets: [ 0, 1, 2 ],
+                        targets: [ 0, 1],
                         className: 'mdl-data-table__cell--non-numeric'
                     }
                 ]
@@ -144,6 +183,7 @@
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15 // Creates a dropdown of 15 years to control year
   });
+    $('.modal-trigger').leanModal();
 </script>
 @endsection
 
@@ -154,11 +194,12 @@
             $('#example').DataTable( {
                 columnDefs: [
                     {
-                        targets: [ 0, 1, 2, 3, 4 ],
+                        targets: [ 0, 1, 2 ],
                         className: 'mdl-data-table__cell--non-numeric'
                     }
                 ]
             } );
+            $('.tooltipped').tooltip({delay: 50});
         } );
     $(".button-collapse").sideNav();
     $('.datepicker').pickadate({

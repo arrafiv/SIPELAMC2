@@ -31,7 +31,7 @@
                 <th data-field="username">Username</th>
                 <th data-field="nama">Nama</th>
                 <th data-field="role">Role</th>
-                <th data-field="action"></th>
+                <th class="center-align" data-field="action">Action</th>
             </tr>
         </thead>
         <tbody>

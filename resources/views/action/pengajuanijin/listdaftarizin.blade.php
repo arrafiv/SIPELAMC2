@@ -3,7 +3,7 @@
 @extends('elements.element')
 @section('isi-side-nav')
 
-<li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Ijin Kegiatan</span></a></li>
+<li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
 <li><a href="{{action('Controller@getdaftarizinlist')}}"><span class="pink-text text-darken-4">List Pengajuan Ijin</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 
@@ -11,8 +11,8 @@
 
 @section('isi-sidebar-in-content')
 
-<li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Ijin Kegiatan</span></a></li>
-<li><a href="{{action('Controller@getdaftarizinlist')}}"><span class="pink-text text-darken-4">List Pengajuan Ijin</span></a></li>
+<li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
+<li><a href="{{action('Controller@getdaftarizinlist')}}"><span class="pink-text text-darken-4">List Pengajuan Izin</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 
 @endsection
@@ -41,9 +41,8 @@
                 <th data-field="nama">Nama</th>
                 <th data-field="nama_kegiatan">Nama Kegiatan</th>
                 <th data-field="penyelenggara">Penyelenggara</th>
-                <th data-field="deskripsi">Deskripsi</th>
                 <th data-field="status">Status</th>
-            
+                <th class="center-align" data-field="action">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -52,8 +51,34 @@
                 <td>{{$daftarizinn->nama}}</td>
                 <td>{{$daftarizinn->nama_kegiatan}}</td>
                 <td>{{$daftarizinn->penyelenggara}}</td>
-                <td>{{$daftarizinn->deskripsi}}</td>
                 <td>{{$daftarizinn->status}}</td>
+                <td>
+                    <div class="center-align">
+                        <a href class="modal-trigger" data-target="{{$j}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Info">info_outline</i></a>
+                    </div>
+                    <!-- Modal Structure For Details-->
+                      <div id="{{$j++}}" class="modal modal-fixed-footer">
+                        <div class="modal-content">
+                          <h4>{{$daftarizinn->nama_kegiatan}}</h4>
+                          <div class="divider"></div>
+                          <br>
+                          <h6 class="pink-text text-darken-4">Pemohon</h6>
+                          <p>{{$daftarizinn->nama}}</p>
+                          <br>
+                          <h6 class="pink-text text-darken-4">Deskripsi</h6>
+                          <p>{{$daftarizinn->deskripsi}}</p>
+                          <br>
+                          <h6 class="pink-text text-darken-4">Waktu Kegiatan</h6>
+                          <p>{{$daftarizinn->tanggal_mulai_kegiatan}} - {{$daftarizinn->tanggal_selesai_kegiatan}}</p>
+                          <br>
+                          <h6 class="pink-text text-darken-4">Kontak</h6>
+                          <p>{{$daftarizinn->email}} | {{$daftarizinn->no_hp}}</p> 
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
+                        </div>
+                      </div>
+                </td>
             </tr>
             @endforeach
         </tbody>
@@ -73,6 +98,7 @@
                     }
                 ]
             } );
+            $('.tooltipped').tooltip({delay: 50});
         } );
     $(".button-collapse").sideNav();
     $('.datepicker').pickadate({

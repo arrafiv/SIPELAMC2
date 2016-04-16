@@ -29,8 +29,8 @@
                         <tr>
                             <th data-field="nama">Nama</th>
                             <th data-field="tipe_surat">Tipe Surat</th>
-                            <th data-field="keperluan">Keperluan</th>
                             <th data-field="status">Status</th>
+                            <th class="center-align" data-field="status">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,8 +38,34 @@
                         <tr>
                             <td>{{$suratt->nama}}</td>
                             <td>{{$suratt->tipe_surat}}</td>
-                            <td>{{$suratt->keperluan}}</td>
                             <td>{{$suratt->status}}</td>
+                            <td>
+                                <div class="center-align">
+                                    <a href class="modal-trigger" data-target="{{$j}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Info">info_outline</i></a>
+                                </div>
+                                  <!-- Modal Structure For Details-->
+                                  <div id="{{$j++}}" class="modal modal-fixed-footer">
+                                    <div class="modal-content">
+                                      <h4>{{$suratt->nama}}</h4>
+                                      <div class="divider"></div>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">NPM</h6>
+                                      <p>{{$suratt->npm}}</p>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Tipe Surat</h6>
+                                      <p>{{$suratt->tipe_surat}}</p>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Keperluan</h6>
+                                      <p>{{$suratt->keperluan}}</p>
+                                      <br>
+                                      <h6 class="pink-text text-darken-4">Kontak</h6>
+                                      <p>{{$suratt->email}} | {{$suratt->no_hp}}</p> 
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
+                                    </div>
+                                  </div>
+                            </td>
                         @endforeach
                     </tbody>
                 </table>
@@ -54,11 +80,12 @@
             $('#example').DataTable( {
                 columnDefs: [
                     {
-                        targets: [ 0, 1, 2, 3, 4 ],
+                        targets: [ 0, 1, 2 ],
                         className: 'mdl-data-table__cell--non-numeric'
                     }
                 ]
             } );
+            $('.tooltipped').tooltip({delay: 50});
         } );
     $(".button-collapse").sideNav();
     $('.datepicker').pickadate({
