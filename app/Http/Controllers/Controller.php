@@ -127,7 +127,7 @@ class Controller extends BaseController
         $daftarizinsekre = DB::table('kegiatans')->join('users', 'users.username', '=', 'kegiatans.username')->where('status', '=', 'Disetujui')->orWhere('status', '=', 'Diproses')->get();
         $daftarizinmanajer = DB::table('kegiatans')->join('users', 'users.username', '=', 'kegiatans.username')->where('status', '=', 'Belum Diproses')->get();
         $i = 0;
-        $j = 1;
+        $j = -1;
         $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
         return view('action.pengajuanijin.daftarizin', compact('daftarizin', 'daftarizinsekre', 'daftarizinmanajer', 'roledatabase', 'i', 'j'));
     }
@@ -137,7 +137,7 @@ class Controller extends BaseController
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
         $daftarizinsekre = DB::table('kegiatans')->join('users', 'users.username', '=', 'kegiatans.username')->where('status', '=', 'Selesai')->get();
-        $j = 1;
+        $j = -1;
         return view('action.pengajuanijin.daftarizinselesai', compact('daftarizinsekre', 'j'));
     }
     
@@ -147,7 +147,7 @@ class Controller extends BaseController
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
         $daftarizinmanajer = DB::table('kegiatans')->join('users', 'users.username', '=', 'kegiatans.username')->where('status', '=', 'Disetujui')->orWhere('status', '=', 'Tidak Disetujui')->get();
-        $j = 1;
+        $j = -1;
         return view('action.pengajuanijin.listdaftarizin', compact('daftarizinmanajer', 'j'));
     }
     public function editizin($id)
@@ -216,7 +216,7 @@ class Controller extends BaseController
 
         $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
         $i = 0;
-        $j = 1;
+        $j = -1;
         return view('action.surat.lihatSurat', compact('surat', 'suratsekretariat', 'roledatabase', 'i', 'j'));
     }
     public function getdaftarsuratselesai()
@@ -225,7 +225,7 @@ class Controller extends BaseController
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
         $suratsekretariat = DB::table('pelayanan_akademiks')->join('users', 'users.username', '=', 'pelayanan_akademiks.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'pelayanan_akademiks.username' )->where('status', '=', 'Selesai')->get();
-        $j = 1;
+        $j = -1;
         return view('action.surat.lihatSuratSelesai', compact('surat', 'suratsekretariat', 'usernameSSO', 'j'));
     }
     public function editsurat($id)

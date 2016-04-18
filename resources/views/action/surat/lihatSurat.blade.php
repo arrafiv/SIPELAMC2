@@ -85,7 +85,7 @@
                                     <a href class="modal-trigger" data-target="{{$j}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Info">info_outline</i></a>
                                 </div>
                                 <!-- Modal Structure For Details-->
-                                  <div id="{{$j++}}" class="modal modal-fixed-footer">
+                                  <div id="{{$j--}}" class="modal modal-fixed-footer">
                                     <div class="modal-content">
                                       <h4>{{$suratt->tipe_surat}}</h4>
                                       <div class="divider"></div>
@@ -134,7 +134,7 @@
                                   </div>
 
                                   <!-- Modal Structure For Details-->
-                                  <div id="{{$j++}}" class="modal modal-fixed-footer">
+                                  <div id="{{$j--}}" class="modal modal-fixed-footer">
                                     <div class="modal-content">
                                       <h4>{{$suratt->nama}}</h4>
                                       <div class="divider"></div>

@@ -106,7 +106,7 @@
                         </a>
                     </div>
                     <!-- Modal Structure For Details-->
-                      <div id="{{$j++}}" class="modal modal-fixed-footer">
+                      <div id="{{$j--}}" class="modal modal-fixed-footer">
                         <div class="modal-content">
                           <h4>{{$daftarizinn->nama_kegiatan}}</h4>
                           <div class="divider"></div>
@@ -163,7 +163,7 @@
                       </div>
 
                       <!-- Modal Structure For Details-->
-                      <div id="{{$j++}}" class="modal modal-fixed-footer">
+                      <div id="{{$j--}}" class="modal modal-fixed-footer">
                         <div class="modal-content">
                           <h4>{{$daftarizinn->nama_kegiatan}}</h4>
                           <div class="divider"></div>
@@ -222,7 +222,7 @@
                       </div>
 
                       <!-- Modal Structure For Details-->
-                      <div id="{{$j++}}" class="modal modal-fixed-footer">
+                      <div id="{{$j--}}" class="modal modal-fixed-footer">
                         <div class="modal-content">
                           <h4>{{$daftarizinn->nama_kegiatan}}</h4>
                           <div class="divider"></div>
