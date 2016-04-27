@@ -76,9 +76,24 @@
                                     @endif
 
                                     @if($suratt->status === "Belum Diproses")
-                                        <a href="{{action('Controller@hapussurat', $suratt->id)}}">
-                                            <i class="material-icons pink-text text-darken-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Delete">delete</i>
-                                        </a>
+
+
+                                        <a class="modal-trigger" data-position="top" data-delay="50" data-tooltip="Delete" href="#modal1"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Delete" href="#modal1">delete</i></a>
+
+                                        
+
+                                         <div id="modal1" class="modal">
+                                          <div class="modal-content">
+                                            <h4>Peringatan</h4>
+                                            <p>Anda akan menghapus surat, tekan 'YA' untuk melanjutkan, tekan 'TIDAK' untuk membatalkan</p>
+                                          </div>
+                                          <div class="modal-footer">
+                                            
+                                             <a href="{{action('Controller@getdaftarsurat')}}" class=" modal-action modal-close waves-effect waves-green btn-flat">TIDAK</a>
+                                             <a href="{{action('Controller@hapussurat', $suratt->id)}}" class=" modal-action modal-close waves-effect waves-green btn-flat">YA</a>
+                                          </div>
+                                        </div>
+
                                     @else
                                         <i class="material-icons grey-text text-darken-2">delete</i>
                                     @endif
