@@ -6,7 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddColumnId' => $baseDir . '/database/migrations/2016_05_04_112216_add_column_id.php',
+    'AddColumnStatus' => $baseDir . '/database/migrations/2016_04_28_145651_add_column_status.php',
     'AddDivisiToStaffsTable' => $baseDir . '/database/migrations/2016_04_13_071146_add_divisi_to_staffs_table.php',
+    'AddId' => $baseDir . '/database/migrations/2016_04_27_225533_add_id.php',
     'CAS_AuthenticationException' => $vendorDir . '/jasig/phpcas/source/CAS/AuthenticationException.php',
     'CAS_Client' => $vendorDir . '/jasig/phpcas/source/CAS/Client.php',
     'CAS_CookieJar' => $vendorDir . '/jasig/phpcas/source/CAS/CookieJar.php',
@@ -59,6 +62,8 @@ return array(
     'CreateTableUser' => $baseDir . '/database/migrations/2016_04_08_125630_create_table_user.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'DropColumnDivisiDiStaff' => $baseDir . '/database/migrations/2016_04_15_212119_drop_column_divisi_di_staff.php',
+    'DropColumnIdKeluhan' => $baseDir . '/database/migrations/2016_05_04_112035_drop_column_id_keluhan.php',
+    'DropIdInfo' => $baseDir . '/database/migrations/2016_04_27_225445_drop_id_info.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',

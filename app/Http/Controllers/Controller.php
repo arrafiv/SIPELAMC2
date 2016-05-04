@@ -8,7 +8,12 @@ use App\kegiatans;
 use App\mahasiswas;
 use App\staffs;
 use App\pelayanan_akademiks;
+use App\info_kemahasiswaans;
+use App\keluhans;
 use DB;
+use Log;
+use Alert;
+use Validator;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -16,6 +21,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Input;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class Controller extends BaseController
 {
@@ -100,6 +108,17 @@ class Controller extends BaseController
 
     public function createizin(Request $kegiatans)
     {
+        $validator = Validator::make($kegiatans->all(), [
+            'nama' => 'required',
+            'penyelenggara' => 'required',
+            'tanggal_mulai_kegiatan' => 'required',
+            'tanggal_selesai_kegiatan' => 'required',
+            'email' => 'required|e-mail',
+            'no_hp' => 'numeric',
+        ]);
+                if ($validator->fails()) {
+                return back()->withErrors($validator);
+        }
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
@@ -263,7 +282,202 @@ class Controller extends BaseController
     }
 
 
+#----------------------------INFO KEMAHASISWAAN---------------------------------------
 
+    public function showcreateinfo() 
+    {
+        // Alert::message('Robots are working!');
+        return view ('action/infokemahasiswaan/createinfo');
+    }
+    public function showinfokemahasiswaan() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $info = DB::table('info_kemahasiswaans')->where('status', '=', 'Published')->orderBy('created_at', 'desc')->paginate(9);
+        if($roledatabase == "sekretariat"){
+            return view ('action/infokemahasiswaan/infokemahasiswaan', compact('info', 'roledatabase'));
+        }
+        else {return view('errors/404');}
+    }
+    public function showinfo_kemahasiswaan() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $info = DB::table('info_kemahasiswaans')->where('status', '=', 'Published')->orderBy('created_at', 'desc')->paginate(9);
+        if($roledatabase == "sekretariat"){
+            return view('errors/404');
+        }
+        else {
+            return view ('action/infokemahasiswaan/infokemahasiswaan_view', compact('info', 'roledatabase'));
+        }
+    }
+    public function showinfo_kemahasiswaan_detail($id) 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $info = info_kemahasiswaans::findOrFail($id);
+        $gambar = $info['gambar'];
+        $judul = $info['judul'];
+        $isi_info = $info['isi_info'];
+        if($roledatabase == "sekretariat"){
+            return view('errors/404');
+        }
+        else {
+            return view ('action/infokemahasiswaan/infodetail_view', compact('judul', 'isi_info', 'gambar', 'roledatabase'));
+        }
+    }
+    public function store(Request $request)
+    {
+        Alert::message('Robots FUCKS working!');
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        dd(phpinfo());
+        if(Input::get('publish') == "publish"){
+            $id = info_kemahasiswaans::create(['username' => $usernameSSO, 'judul' => $request['judul'], 'isi_info' => $request['isi_info'], 'status' => "Published"])->id;
+
+        }
+        else{
+            $id = info_kemahasiswaans::create(['username' => $usernameSSO, 'judul' => $request['judul'], 'isi_info' => $request['isi_info'], 'status' => "Draft"])->id;
+        }
+
+        $mime = Image::make(Input::file('image'))->mime();
+        $extension = substr($mime, 6);
+        Image::make(Input::file('image'))->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->save(base_path() . '/public/images/info_kemahasiswaan/' . $id . '.' . $extension);
+        $imageName = $id . '.' . $extension;
+        DB::table('info_kemahasiswaans')->where('id', $id)->update(['gambar' => $imageName]);
+        return redirect('info');
+    }
+    public function editinfo($id)
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $pembuatinfo = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $info = info_kemahasiswaans::findOrFail($id);
+        if($pembuatinfo == "sekretariat"){
+            return view('action.infokemahasiswaan.editinfo', compact('info'));
+        }
+        else{
+            return view('errors/404');
+        }
+        
+    }
+    public function updateinfo($id, Request $request)
+    {
+        $info = info_kemahasiswaans::findOrFail($id);
+        $info->update($request->all());
+        $gambar = DB::table('info_kemahasiswaans')->where('id', '=', $id)->value('gambar');
+
+        if(Input::hasFile('image')){
+            $mime = Image::make(Input::file('image'))->mime();
+            $extension = substr($mime, 6);
+            Image::make(Input::file('image'))->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->save(base_path() . '/public/images/info_kemahasiswaan/' . $id . '.' . $extension);
+            $imageName = $id . '.' . $extension;
+            if(Input::get('publish') == "publish"){
+                DB::table('info_kemahasiswaans')->where('id', $id)->update(['gambar' => $imageName, 'status' => "Published"]);
+                return redirect('info/info-published');
+            }
+            else{
+                DB::table('info_kemahasiswaans')->where('id', $id)->update(['gambar' => $imageName, 'status' => "Draft"]);
+                return redirect('info/info-draft');
+            }
+        }
+        else{
+            if(Input::get('publish') == "publish"){
+                DB::table('info_kemahasiswaans')->where('id', $id)->update(['status' => "Published"]);
+                return redirect('info/info-published');
+            }
+            else{
+                DB::table('info_kemahasiswaans')->where('id', $id)->update(['status' => "Draft"]);
+                return redirect('info/info-draft');
+            }
+        }
+    }
+    public function getdaftarinfo() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+
+        // INFO PUBLISHED
+        $info = DB::table('info_kemahasiswaans')->where('status', '=', 'Published')->get();
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $i = 0;
+        $j = -1;
+        return view('action.infokemahasiswaan.daftarinfotabel', compact('info', 'draft', 'roledatabase', 'i', 'j'));
+    }
+    public function getdaftarinfodraft() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+
+        // INFO DRAFT
+        $info = DB::table('info_kemahasiswaans')->where('status', '=', 'Draft')->get();
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $i = 0;
+        $j = -1;
+        return view('action.infokemahasiswaan.daftarinfotabel', compact('info', 'draft', 'roledatabase', 'i', 'j'));
+    }
+
+#--------------------------KELUHAN-----------------------------------------------------    
+
+    
+    public function createkeluhan(Request $keluhan)
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $input = $keluhan->all();
+        $prioritas=$input['prioritas'];
+        $divisi=$input['divisi'];
+        $email=$input['email'];
+        $telepon=$input['no_hp'];
+        $keluhan=$input['keluhan'];
+        $judul=$input['judul'];
+        $no_hp = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('no_hp');
+        $email_mhs = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('email');
+        $keluhan = keluhans::create(['prioritas' => $prioritas, 'divisi' => $divisi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'keluhan' => $keluhan, 'judul' => $judul])->id;
+        return redirect ('keluhan');
+    }
+    
+    public function getcreatekeluhan() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $no_hp = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('no_hp');
+        $email_mhs = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('email');
+        return view ('action/keluhan/createkeluhan', compact('email_mhs', 'no_hp'));
+    }
+    public function getdaftarkeluhan() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+
+        // KELUHAN MAHASISWA
+        $keluhan = DB::table('keluhans')->where('username', '=', $usernameSSO)->get();
+
+        // KELUHAN SEKRETARIAT
+        $keluhansarprasinfra = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('status', '=', 'Diproses')->orWhere('status', '=', 'Menunggu')->get();
+
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $i = 0;
+        $j = -1;
+        return view('action.keluhan.daftarKeluhan', compact('keluhan', 'keluhansarprasinfra', 'roledatabase', 'i', 'j'));
+    }
+    public function getdaftarkeluhanselesai()
+    {
+        
+    }
 
 #----------------------------MANIPULASI USER------------------------------------------
 

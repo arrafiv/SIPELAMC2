@@ -20,7 +20,7 @@
         font-size: 2rem;
         margin-left: .5em;
     }
-    .side-nav {
+    body {
     background-color: #F9F6F6;
     }
     </style>
@@ -28,7 +28,7 @@
 
 <body>
     @yield('navbar')
-    <main>@yield('content')</main>
+    @yield('content')
     @yield('script')
 </body>
 

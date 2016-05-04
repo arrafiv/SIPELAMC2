@@ -65,12 +65,39 @@ Route::post('/surat/{id}/editstatus', 'Controller@updatestatussurat');
 #DELETE SURAT
 Route::get('/surat/daftar-surat/{id}','Controller@hapussurat');
 
+#-----------------------INFO KEMAHASISWAAN
+
+#CREATE INFO
+Route::get('/info', 'Controller@showcreateinfo');
+Route::post('/action/infokemahasiswaan/createinfo', 'Controller@store');
+
+#READ INFO
+Route::get('/info/info-published', 'Controller@getdaftarinfo');
+Route::get('/info/info-draft', 'Controller@getdaftarinfodraft');
+Route::get('/info/info-kemahasiswaan', 'Controller@showinfokemahasiswaan');
+Route::get('/info_kemahasiswaan', 'Controller@showinfo_kemahasiswaan');
+Route::get('/info_kemahasiswaan/{id}', 'Controller@showinfo_kemahasiswaan_detail');
+// Route::get('/surat/daftar-surat-selesai', 'Controller@getdaftarsuratselesai');
+
+#UPDATE INFO
+Route::get('/info/{id}/edit', 'Controller@editinfo');
+Route::post('/info/{id}/edit', 'Controller@updateinfo');
+// Route::post('/surat/{id}/editstatus', 'Controller@updatestatussurat');
+
+// #DELETE SURAT
+// Route::get('/surat/daftar-surat/{id}','Controller@hapussurat');
+
+#-----------------------KELUHAN
+
+Route::get('/keluhan', 'Controller@getcreatekeluhan');
+Route::post('/action/keluhan/createkeluhan', 'Controller@createkeluhan');
+Route::get('/keluhan/daftar-keluhan', 'Controller@getdaftarkeluhan');
+Route::get('/keluhan/daftar-keluhan-selesai', 'Controller@getdaftarkeluhanselesai');
 
 #-----------------------USER (OLEH ADMIN)
 
 #READ USER
 Route::get('/daftar-user', 'Controller@getuser');
-
 Route::post('/daftar-user/{username}', 'Controller@updaterole');
 
 

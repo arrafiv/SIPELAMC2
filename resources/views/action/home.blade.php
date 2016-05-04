@@ -29,7 +29,7 @@
 
                             <!-- SEKRETARIAT -->
                             @elseif ($role === "sekretariat")
-                            <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-01.png')}}">
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showcreateinfo')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarsurat')}}"><img src="{{URL::to('src/assethome-02.png')}}"></a>
@@ -41,7 +41,7 @@
 
                             <!-- MANAJER -->
                             @elseif ($role === "manajer akademik")
-                            <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-01.png')}}">
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showinfo_kemahasiswaan')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-03.png')}}">
@@ -53,13 +53,13 @@
 
                              <!-- MAHASISWA -->
                             @else
-                            <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-01.png')}}">
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showinfo_kemahasiswaan')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getsurat')}}"><img src="{{URL::to('src/assethome-02.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pelayanan Akademik Surat</span></div>
                             </div>
-                            <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-03.png')}}">
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getcreatekeluhan')}}"><img src="{{URL::to('src/assethome-03.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getcreateizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>

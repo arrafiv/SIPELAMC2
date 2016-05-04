@@ -24,7 +24,7 @@
         {!! Form::open(['url' => 'action/pengajuanijin/create']) !!}
             <div class="row">
                 <div class="input-field col s12 l8">
-                    {!! Form::text('nama', null, ['class' => 'validate', 'placeholder' => 'Nama dari Kegiatan']) !!}
+                    {!! Form::text('nama', null, ['class' => 'validate', 'placeholder' => 'Nama dari Kegiatan', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('nama', 'Nama Kegiatan') !!}
                 </div>
             </div>

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{URL::to('materialize/css/materialize.css')}}">
     <link rel="stylesheet" href="{{URL::to('material/dataTables.material.css')}}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{URL::to('dist/sweetalert.css')}}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     <script src="{{URL::to('material/jquery.dataTables.js')}}"></script>
@@ -57,6 +58,9 @@
     <main>
         @yield('content')
     </main>
+    <script src="{{URL::to('dist/sweetalert.min.js')}}"></script>
+    <!-- Include this after the sweet alert js file -->
+    @include('sweet::alert')
     @yield('script')
 </body>
 
