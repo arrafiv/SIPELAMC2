@@ -108,17 +108,6 @@ class Controller extends BaseController
 
     public function createizin(Request $kegiatans)
     {
-        $validator = Validator::make($kegiatans->all(), [
-            'nama' => 'required',
-            'penyelenggara' => 'required',
-            'tanggal_mulai_kegiatan' => 'required',
-            'tanggal_selesai_kegiatan' => 'required',
-            'email' => 'required|e-mail',
-            'no_hp' => 'numeric',
-        ]);
-                if ($validator->fails()) {
-                return back()->withErrors($validator);
-        }
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
@@ -325,20 +314,20 @@ class Controller extends BaseController
         $gambar = $info['gambar'];
         $judul = $info['judul'];
         $isi_info = $info['isi_info'];
-        if($roledatabase == "sekretariat"){
-            return view('errors/404');
-        }
-        else {
-            return view ('action/infokemahasiswaan/infodetail_view', compact('judul', 'isi_info', 'gambar', 'roledatabase'));
-        }
+        $created_at = $info['created_at'];
+        // if($roledatabase == "sekretariat"){
+        //     return view ('action/infokemahasiswaan/infodetail_sekre', compact('judul', 'isi_info', 'created_at', 'gambar', 'roledatabase'));
+        // }
+        // else {
+            return view ('action/infokemahasiswaan/infodetail_view', compact('judul', 'isi_info', 'created_at', 'gambar', 'roledatabase'));
+        // }
     }
     public function store(Request $request)
     {
-        Alert::message('Robots FUCKS working!');
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
-        dd(phpinfo());
+        // dd(Input::get('publish'));
         if(Input::get('publish') == "publish"){
             $id = info_kemahasiswaans::create(['username' => $usernameSSO, 'judul' => $request['judul'], 'isi_info' => $request['isi_info'], 'status' => "Published"])->id;
 
@@ -374,7 +363,7 @@ class Controller extends BaseController
         $info = info_kemahasiswaans::findOrFail($id);
         $info->update($request->all());
         $gambar = DB::table('info_kemahasiswaans')->where('id', '=', $id)->value('gambar');
-
+        // dd(Input::get('publish'));
         if(Input::hasFile('image')){
             $mime = Image::make(Input::file('image'))->mime();
             $extension = substr($mime, 6);
@@ -389,6 +378,7 @@ class Controller extends BaseController
                 return redirect('info/info-draft');
             }
         }
+        // dd(Input::get('publish'));
         else{
             if(Input::get('publish') == "publish"){
                 DB::table('info_kemahasiswaans')->where('id', $id)->update(['status' => "Published"]);
@@ -408,10 +398,11 @@ class Controller extends BaseController
 
         // INFO PUBLISHED
         $info = DB::table('info_kemahasiswaans')->where('status', '=', 'Published')->get();
+        $statusinfo = "Published";
         $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
         $i = 0;
         $j = -1;
-        return view('action.infokemahasiswaan.daftarinfotabel', compact('info', 'draft', 'roledatabase', 'i', 'j'));
+        return view('action.infokemahasiswaan.daftarinfotabel', compact('info', 'statusinfo', 'roledatabase', 'i', 'j'));
     }
     public function getdaftarinfodraft() 
     {
@@ -421,10 +412,16 @@ class Controller extends BaseController
 
         // INFO DRAFT
         $info = DB::table('info_kemahasiswaans')->where('status', '=', 'Draft')->get();
+        $statusinfo = "Draft";
         $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
         $i = 0;
         $j = -1;
-        return view('action.infokemahasiswaan.daftarinfotabel', compact('info', 'draft', 'roledatabase', 'i', 'j'));
+        return view('action.infokemahasiswaan.daftarinfotabel', compact('info', 'statusinfo', 'roledatabase', 'i', 'j'));
+    }
+    public function hapusinfo($id)
+    {
+        DB::table('info_kemahasiswaans') -> where('id','=', $id) -> delete();
+        return redirect ('info/info-draft');
     }
 
 #--------------------------KELUHAN-----------------------------------------------------    
@@ -462,21 +459,22 @@ class Controller extends BaseController
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
 
         // KELUHAN MAHASISWA
-        $keluhan = DB::table('keluhans')->where('username', '=', $usernameSSO)->get();
+        $keluhanmahasiswa = DB::table('keluhans')->where('username', '=', $usernameSSO)->get();
 
-        // KELUHAN SEKRETARIAT
-        $keluhansarprasinfra = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('status', '=', 'Diproses')->orWhere('status', '=', 'Menunggu')->get();
-
-        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        // KELUHAN TERTUJU
+        $keluhantertuju = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->get();
         $i = 0;
         $j = -1;
-        return view('action.keluhan.daftarKeluhan', compact('keluhan', 'keluhansarprasinfra', 'roledatabase', 'i', 'j'));
+        $k = -1000;
+        return view('action.keluhan.daftarKeluhan', compact('keluhanmahasiswa', 'keluhantertuju', 'roledatabase', 'i', 'j', 'k'));
     }
-    public function getdaftarkeluhanselesai()
+    public function hapuskeluhan($id)
     {
-        
+        DB::table('keluhans') -> where('id','=', $id) -> delete();
+        return redirect ('keluhan/daftar-keluhan');
     }
 
 #----------------------------MANIPULASI USER------------------------------------------

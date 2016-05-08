@@ -55,7 +55,7 @@ margin-top: 2em;
             </div>
         </div>
         <div class="row" id="buttoninfo">
-            <button type="submit" name="publish" value="ipublish" class="waves-effect waves-light btn pink darken-4">PUBLIKASIKAN</button>
+            <button type="submit" name="publish" value="publish" class="waves-effect waves-light btn pink darken-4">PUBLIKASIKAN</button>
             <button type="submit" name="draft" class="waves-effect waves-light btn grey darken-2">DRAFT</button>
         </div>
         

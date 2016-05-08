@@ -84,15 +84,21 @@ Route::get('/info/{id}/edit', 'Controller@editinfo');
 Route::post('/info/{id}/edit', 'Controller@updateinfo');
 // Route::post('/surat/{id}/editstatus', 'Controller@updatestatussurat');
 
-// #DELETE SURAT
-// Route::get('/surat/daftar-surat/{id}','Controller@hapussurat');
+#DELETE INFO (HANYA DRAFT)
+Route::get('/info/info-draft/{id}','Controller@hapusinfo');
 
 #-----------------------KELUHAN
 
+#CREATE KELUHAN
 Route::get('/keluhan', 'Controller@getcreatekeluhan');
 Route::post('/action/keluhan/createkeluhan', 'Controller@createkeluhan');
+
+#READ KELUHAN
 Route::get('/keluhan/daftar-keluhan', 'Controller@getdaftarkeluhan');
 Route::get('/keluhan/daftar-keluhan-selesai', 'Controller@getdaftarkeluhanselesai');
+
+#DELETE KELUHAN
+Route::get('/keluhan/daftar-keluhan/{id}','Controller@hapuskeluhan');
 
 #-----------------------USER (OLEH ADMIN)
 

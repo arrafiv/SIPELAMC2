@@ -3608,6 +3608,13 @@ input[type=range] + .thumb {
 }
 
 .truncate {
+  overflow: hidden;
+  line-height: 1.2em;
+  height: 3.6em;
+  text-overflow: ellipsis; 
+}
+
+.truncateoneline{
   display: block;
   white-space: nowrap;
   overflow: hidden;

@@ -29,6 +29,10 @@ margin-top: 2em;
 #isi_info{
 font-size: 12px;
 }
+#time{
+font-size: 10px;
+font-weight: 100;
+}
 </style>
 @endsection
 @extends('elements.element')
@@ -44,13 +48,17 @@ font-size: 12px;
     <div class="row">
         @foreach($info as $infokemahasiswaan)
         <div class="col s12 m6 l4">
-            <div class="card small hoverable red lighten-3">
+            <div class="card medium hoverable grey lighten-1">
                 <div class="card-image">
                     <img src="{{URL::to('images/info_kemahasiswaan/' . $infokemahasiswaan->gambar)}}">
                 </div>
                 <div class="card-content">
-                    <span class="card-title white-text">{{$infokemahasiswaan->judul}}</span>
+                    <a href="{{action('Controller@showinfo_kemahasiswaan_detail', $infokemahasiswaan->id)}}">
+                    <span class="card-title white-text truncateoneline">{{$infokemahasiswaan->judul}}</span>
+                    </a>
                     <p id="isi_info" class="truncate white-text">{{$infokemahasiswaan->isi_info}}</p>
+                    <br>
+                    <p id="time" class="white-text right">{{$infokemahasiswaan->created_at}}</p>
                 </div>
             </div>
         </div>

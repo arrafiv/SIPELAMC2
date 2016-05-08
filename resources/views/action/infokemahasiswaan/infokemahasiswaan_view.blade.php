@@ -18,24 +18,14 @@
     #isi_info{
         font-size: 12px;
     }
+    #time{
+        font-size: 10px;
+        font-weight: 100;
+    }
+
 </style>
 @endsection
 @extends('elements.element')
-
-@if($roledatabase === "sekretariat")
-@section('isi-side-nav')
-<li><a href="{{action('Controller@showcreateinfo')}}"><span class="pink-text text-darken-4">Buat Info</span></a></li>
-<li><a href="#"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></a></li>
-<li><a href="{{action('Controller@getdaftarinfo')}}"><span class="pink-text text-darken-4">Published</span></a></li>
-<li><a href="{{action('Controller@getdaftarinfodraft')}}"><span class="pink-text text-darken-4">Draft</span></a></li>
-@endsection
-@section('isi-sidebar-in-content')
-<li><a href="{{action('Controller@showcreateinfo')}}"><span class="pink-text text-darken-4">Buat Info</span></a></li>
-<li><a href="#"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></a></li>
-<li><a href="{{action('Controller@getdaftarinfo')}}"><span class="pink-text text-darken-4">Published</span></a></li>
-<li><a href="{{action('Controller@getdaftarinfodraft')}}"><span class="pink-text text-darken-4">Draft</span></a></li>
-@endsection
-@endif
 
 @section('content')
 <div class="rowatasjudul">
@@ -50,15 +40,17 @@
     <div class="row">
     @foreach($info as $infokemahasiswaan)
         <div class="col s12 m6 l4">
-            <div class="card small hoverable red lighten-3">
+            <div class="card medium hoverable grey lighten-1">
                 <div class="card-image">
                     <img src="{{URL::to('images/info_kemahasiswaan/' . $infokemahasiswaan->gambar)}}">
                 </div>
                 <div class="card-content">
-                     <a href="{{action('Controller@showinfo_kemahasiswaan_detail', $infokemahasiswaan->id)}}">
-                     <span class="card-title white-text">{{$infokemahasiswaan->judul}}</span>
-                     </a>
+                    <a href="{{action('Controller@showinfo_kemahasiswaan_detail', $infokemahasiswaan->id)}}">
+                    <span class="card-title white-text truncateoneline">{{$infokemahasiswaan->judul}}</span>
+                    </a>
                     <p id="isi_info" class="truncate white-text">{{$infokemahasiswaan->isi_info}}</p>
+                    <br>
+                    <p id="time" class="white-text right">{{$infokemahasiswaan->created_at}}</p>
                 </div>
             </div>
         </div>

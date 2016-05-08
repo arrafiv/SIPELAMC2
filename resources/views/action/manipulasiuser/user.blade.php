@@ -53,6 +53,8 @@
                               <option value="mahasiswa">Mahasiswa</option>
                               <option value="sekretariat">Sekretariat</option>
                               <option value="manajer akademik">Manajer Akademik</option>
+                              <option value="manajer sarpras">Manajer Sarana Prasarana</option>
+                              <option value="manajer infrastruktur">Manajer Infrastruktur</option>
                               <option value="admin">Admin</option>
                             </select>
                             <label>UBAH ROLE USER</label>

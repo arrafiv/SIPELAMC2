@@ -39,16 +39,34 @@
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
                             </div>
 
-                            <!-- MANAJER -->
+                            <!-- MANAJER AKADEMIK -->
                             @elseif ($role === "manajer akademik")
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showinfo_kemahasiswaan')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
-                            <div class="col s12 m6 l3" id="assethome"><img src="{{URL::to('src/assethome-03.png')}}">
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarkeluhan')}}"><img src="{{URL::to('src/assethome-03.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
+                            </div>
+
+                            <!-- MANAJER SARPRAS -->
+                            @elseif ($role === "manajer sarpras")
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showinfo_kemahasiswaan')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
+                            </div>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarkeluhan')}}"><img src="{{URL::to('src/assethome-03.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
+                            </div>
+
+                            <!-- MANAJER INFRASTRUKTUR -->
+                            @elseif ($role === "manajer infrastruktur")
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showinfo_kemahasiswaan')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
+                            </div>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarkeluhan')}}"><img src="{{URL::to('src/assethome-03.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
 
                              <!-- MAHASISWA -->

@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                     {!! Form::select('divisi', array('Akademik' => 'Akademik', 'Infrastruktur' => 'Infrastruktur', 'Sarana dan Prasarana' => 'Sarana dan Prasarana'), null, ['placeholder' => 'Divisi']) !!}
+                     {!! Form::select('divisi', array('manajer akademik' => 'Akademik', 'manajer infrastruktur' => 'Infrastruktur', 'manajer sarpras' => 'Sarana dan Prasarana'), null, ['placeholder' => 'Divisi']) !!}
                 </div>
             </div>
             <div class="row">
