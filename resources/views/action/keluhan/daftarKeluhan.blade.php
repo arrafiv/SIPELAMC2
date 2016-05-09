@@ -10,19 +10,31 @@ margin-top: 10em;
 @section('isi-side-nav')
 @if($roledatabase === "mahasiswa")
 <li><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
+@elseif($roledatabase === "manajer akademik")
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
+@elseif($roledatabase === "manajer infrastruktur")
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
+@elseif($roledatabase === "manajer sarpras")
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
 @endif
 <li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
-<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
+
 @section('isi-sidebar-in-content')
 @if($roledatabase === "mahasiswa")
 <li><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
+@elseif($roledatabase === "manajer akademik")
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
+@elseif($roledatabase === "manajer infrastruktur")
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
+@elseif($roledatabase === "manajer sarpras")
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
 @endif
 <li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
-<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
+
 @section('content')
 <div class="main">
     <div class="row">
@@ -95,8 +107,11 @@ margin-top: 10em;
                                     <h6 class="pink-text text-darken-4">Kontak</h6>
                                     <p>{{$keluhann->email}}</p>
                                     <p>{{$keluhann->no_hp}}</p>
-                                </div>
-                                <div class="modal-footer">
+                                    <br>
+                                    <h6 class="pink-text text-darken-4">Gambar</h6>
+                                    <p><img src="{{URL::to('images/keluhan/' . $keluhann->gambar)}}"></p>
+                                    </div>
+                                    <div class="modal-footer">
                                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
                                 </div>
                             </div>
@@ -146,6 +161,9 @@ margin-top: 10em;
                                     <h6 class="pink-text text-darken-4">Keluhan</h6>
                                     <p>{{$keluhann->judul}}</p>
                                     <p>{{$keluhann->keluhan}}</p>
+                                    <br>
+                                    <h6 class="pink-text text-darken-4">Gambar</h6>
+                                    <p><img src="{{URL::to('images/keluhan/' . $keluhann->gambar)}}"></p>
                                     <br>
                                     <h6 class="pink-text text-darken-4">Kontak</h6>
                                     <p>{{$keluhann->email}}</p>

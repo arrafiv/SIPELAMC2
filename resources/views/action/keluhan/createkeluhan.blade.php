@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        {!! Form::open(['url' => 'action/keluhan/createkeluhan']) !!}
+        {!! Form::open(['url' => 'action/keluhan/createkeluhan', 'files' => true]) !!}
             <div class="row">
                 <div class="input-field col s12 m6">
                     {!! Form::select('prioritas', array('Low' => 'Low', 'Medium' => 'Medium', 'High' => 'High'), null, ['placeholder' => 'Prioritas']) !!}
@@ -54,6 +54,19 @@
                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>
+            <div class="row">
+            <div class="input-field col s12 l6">
+                <div class="file-field input-field">
+                    <div class="btn indigo darken-1">
+                        <span>GAMBAR</span>
+                        <input class="upload-file" type="file" name="image" accept="image/x-png, image/gif, image/jpeg">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
             <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Keluhan Berhasil Dibuat', 5000)">SUBMIT
             </button>
         {!! Form::close() !!}

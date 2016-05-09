@@ -44,6 +44,38 @@ margin-top: 10em;
                         <td>{{$keluhann->nama}}</td>
                         <td>{{$keluhann->judul}}</td>
                         <td>{{$keluhann->status}}</td>
+                        
+                    <td>
+                        <div class="center-align">
+                            <a href class="modal-trigger" data-target="{{$j}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Info">info_outline</i></a>
+                        
+                        </div>
+                    
+                        <!-- Modal Structure For Details-->
+                        <div id="{{$j--}}" class="modal modal-fixed-footer">
+                            <div class="modal-content">
+                                <h4>{{$keluhann->nama}}</h4>
+                                <div class="divider"></div>
+                                <br>
+                                <h6 class="pink-text text-darken-4">NPM</h6>
+                                <p>{{$keluhann->npm}}</p>
+                                <br>
+                                <h6 class="pink-text text-darken-4">Keluhan</h6>
+                                <p>{{$keluhann->judul}}</p>
+                                <p>{{$keluhann->keluhan}}</p>
+                                <br>
+                                <h6 class="pink-text text-darken-4">Gambar</h6>
+                                <p><img src="{{URL::to('images/keluhan/' . $keluhann->gambar)}}"></p>
+                                <br>
+                                <h6 class="pink-text text-darken-4">Kontak</h6>
+                                <p>{{$keluhann->email}}</p>
+                                <p>{{$keluhann->no_hp}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
+                            </div>
+                        </div>
+                    </td>
                     </tr>
                     @endforeach
                 </tbody>

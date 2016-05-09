@@ -440,8 +440,17 @@ class Controller extends BaseController
         $keluhan=$input['keluhan'];
         $judul=$input['judul'];
         $no_hp = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('no_hp');
+        
         $email_mhs = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('email');
-        $keluhan = keluhans::create(['prioritas' => $prioritas, 'divisi' => $divisi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'keluhan' => $keluhan, 'judul' => $judul])->id;
+        $keluhanid = keluhans::create(['prioritas' => $prioritas, 'divisi' => $divisi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'keluhan' => $keluhan, 'judul' => $judul])->id;
+        
+        $mime = Image::make(Input::file('image'))->mime();
+        $extension = substr($mime, 6);
+        Image::make(Input::file('image'))->resize(350, null, function ($constraint) {$constraint->aspectRatio();})->save(base_path() . '/public/images/keluhan/' . $keluhanid . '.' . $extension);
+        $imageName = $keluhanid . '.' . $extension;
+        
+        DB::table('keluhans')->where('id', $keluhanid)->update(['gambar' => $imageName]);
+        
         return redirect ('keluhan');
     }
     
@@ -483,10 +492,12 @@ class Controller extends BaseController
         $usernameSSO  = $user->username;
         $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
         
+        $j = -1;
+        
          // KELUHAN DIPROSES
         $keluhandiproses = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->where('status', '=', 'diproses')->get();
         
-        return view('action.keluhan.daftarkeluhandiproses', compact('keluhandiproses', 'usernameSSO'));
+        return view('action.keluhan.daftarkeluhandiproses', compact('keluhandiproses', 'j'));
     }
     
     public function updatestatuskeluhan($id, Request $request){
