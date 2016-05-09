@@ -465,12 +465,37 @@ class Controller extends BaseController
         $keluhanmahasiswa = DB::table('keluhans')->where('username', '=', $usernameSSO)->get();
 
         // KELUHAN TERTUJU
-        $keluhantertuju = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->get();
+        $keluhantertuju = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->where('status', '=', 'belum diproses')->get();
+        
+        // KELUHAN DIPROSES
+        $keluhandiproses = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->where('status', '=', 'diproses')->get();
+        
         $i = 0;
         $j = -1;
         $k = -1000;
         return view('action.keluhan.daftarKeluhan', compact('keluhanmahasiswa', 'keluhantertuju', 'roledatabase', 'i', 'j', 'k'));
     }
+    
+    public function getdaftarkeluhandiproses()
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        
+         // KELUHAN DIPROSES
+        $keluhandiproses = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->where('status', '=', 'diproses')->get();
+        
+        return view('action.keluhan.daftarkeluhandiproses', compact('keluhandiproses', 'usernameSSO'));
+    }
+    
+    public function updatestatuskeluhan($id, Request $request){
+        $input = $request->all();
+        $status = $input['status'];
+        DB::table('keluhans')->where('id', $id)->update(['status' => $status]);
+        return redirect('keluhan/daftar-keluhan');
+    }
+    
     public function hapuskeluhan($id)
     {
         DB::table('keluhans') -> where('id','=', $id) -> delete();

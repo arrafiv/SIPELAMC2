@@ -12,6 +12,7 @@ margin-top: 10em;
 <li><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
 @endif
 <li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 @section('isi-sidebar-in-content')
@@ -19,6 +20,7 @@ margin-top: 10em;
 <li><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
 @endif
 <li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
+<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 @section('content')
@@ -110,10 +112,30 @@ margin-top: 10em;
                         <td>{{$keluhann->status}}</td>
                         <td>
                             <div class="center-align">
-                                <a href class="modal-trigger" data-target="{{$i}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Info">info_outline</i></a>
+                                <a href class="modal-trigger" data-target="{{$j}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Info">info_outline</i></a>
+                                <a href class="modal-trigger" data-target="{{$i}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Update">swap_vert</i></a>
                             </div>
+                            <!-- Modal Structure For Update Status-->
+                            <div id="{{$i++}}" class="modal">
+                                    <div class="modal-content">
+                                      {!! Form::model($keluhann, ['action' => ['Controller@updatestatuskeluhan', $keluhann->id]]) !!}
+                                        <div class="input-field col s12">
+                                        <select name="status" >
+                                          <option value="" disabled selected>Choose your option</option>
+                                          <option value="Diproses">Diproses</option>
+                                        </select>
+                                        <label>UBAH STATUS SURAT</label>
+                                      </div>
+                                      <div class="row">
+                                         <button class="waves-effect waves-light btn pink darken-4" id="buttonmodal">SUBMIT</button>
+                                          <a class="modal-action modal-close btn grey darken-1" id="buttonmodal">Close</a>
+                                      </div>
+                                    {!! Form::close() !!}
+                                    </div>
+                                  </div>
+                            
                             <!-- Modal Structure For Details-->
-                            <div id="{{$i++}}" class="modal modal-fixed-footer">
+                            <div id="{{$j--}}" class="modal modal-fixed-footer">
                                 <div class="modal-content">
                                     <h4>{{$keluhann->nama}}</h4>
                                     <div class="divider"></div>

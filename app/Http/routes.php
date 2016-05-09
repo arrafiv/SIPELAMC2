@@ -95,10 +95,12 @@ Route::post('/action/keluhan/createkeluhan', 'Controller@createkeluhan');
 
 #READ KELUHAN
 Route::get('/keluhan/daftar-keluhan', 'Controller@getdaftarkeluhan');
-Route::get('/keluhan/daftar-keluhan-selesai', 'Controller@getdaftarkeluhanselesai');
+Route::get('/keluhan/daftar-keluhan-diproses', 'Controller@getdaftarkeluhandiproses');
 
 #DELETE KELUHAN
 Route::get('/keluhan/daftar-keluhan/{id}','Controller@hapuskeluhan');
+
+Route::post('/keluhan/{id}/editstatus', 'Controller@updatestatuskeluhan');
 
 #-----------------------USER (OLEH ADMIN)
 
