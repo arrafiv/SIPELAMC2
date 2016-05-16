@@ -24,39 +24,39 @@
         {!! Form::model($izin, ['action' => ['Controller@updateizin', $izin->id]]) !!}
             <div class="row">
                 <div class="input-field col s12 l8">
-                    {!! Form::text('nama_kegiatan', null, ['class' => 'validate', 'placeholder' => 'Nama dari Kegiatan']) !!}
+                    {!! Form::text('nama_kegiatan', null, ['class' => 'validate', 'placeholder' => 'Nama dari Kegiatan', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('nama', 'Nama Kegiatan') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                    {!! Form::text('penyelenggara', null, ['class' => 'validate', 'placeholder' => 'Organisasi yang menyelenggarakan']) !!}
+                    {!! Form::text('penyelenggara', null, ['class' => 'validate', 'placeholder' => 'Organisasi yang menyelenggarakan', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('penyelenggara', 'Penyelenggara') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l4">
-                    {!! Form::date('tanggal_mulai_kegiatan', null, ['class' => 'datepicker', 'placeholder' => 'Tanggal mulai']) !!}
+                    {!! Form::date('tanggal_mulai_kegiatan', null, ['class' => 'datepicker', 'placeholder' => 'Tanggal mulai', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('tanggal_mulai_kegiatan', 'Tanggal Mulai Kegiatan') !!}
                 </div>
                 <div class="input-field col s12 l4">
-                    {!! Form::date('tanggal_selesai_kegiatan', null, ['class' => 'datepicker', 'placeholder' => 'Tanggal selesai']) !!}
+                    {!! Form::date('tanggal_selesai_kegiatan', null, ['class' => 'datepicker', 'placeholder' => 'Tanggal selesai', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('tanggal_selesai_kegiatan', 'Tanggal Selesai Kegiatan') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                    {!! Form::textarea('deskripsi', null, ['class' => 'materialize-textarea']) !!}
+                    {!! Form::textarea('deskripsi', null, ['class' => 'materialize-textarea', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('deskripsi', 'Deskripsi') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l4">
-                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz']) !!}
+                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('email', 'Email') !!}
                 </div>
                 <div class="input-field col s12 l4">
-                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '08**********']) !!}
+                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '+62812********', 'pattern' => '^([0|\+[0-9]{1,5})?([1-9][0-9]{9})$', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>
