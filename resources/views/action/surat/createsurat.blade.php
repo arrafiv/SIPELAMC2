@@ -24,22 +24,22 @@
         {!! Form::open(['url' => 'action/surat/createsurat']) !!}
             <div class="row">
                 <div class="input-field col s12 m6">
-                    {!! Form::select('tipe_surat', array('Beasiswa' => 'Beasiswa', 'Transkrip Nilai' => 'Transkrip Nilai'), null, ['placeholder' => 'Pilih salah satu surat']) !!}
+                    {!! Form::select('tipe_surat', array('Beasiswa' => 'Beasiswa', 'Transkrip Nilai' => 'Transkrip Nilai'), null, ['class' => 'validate', 'placeholder' => 'Pilih salah satu surat', 'required' => "", 'aria-required' => 'true']) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                    {!! Form::textarea('keperluan', null, ['class' => 'materialize-textarea']) !!}
+                    {!! Form::textarea('keperluan', null, ['class' => 'materialize-textarea', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('keperluan', 'Keperluan Surat') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l4">
-                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz']) !!}
+                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('email', 'Email') !!}
                 </div>
                 <div class="input-field col s12 l4">
-                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '08**********']) !!}
+                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '+62812********', 'pattern' => '^([0|\+[0-9]{1,5})?([1-9][0-9]{9})$', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>
@@ -60,16 +60,6 @@
   });
 </script>
 @endsection
-
-
-
-
-
-
-
-
-
-
 
 
 

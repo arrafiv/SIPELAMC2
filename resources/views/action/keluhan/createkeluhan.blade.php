@@ -23,34 +23,34 @@
     <div class="row">
         {!! Form::open(['url' => 'action/keluhan/createkeluhan', 'files' => true]) !!}
             <div class="row">
-                <div class="input-field col s12 m6">
-                    {!! Form::select('prioritas', array('Low' => 'Low', 'Medium' => 'Medium', 'High' => 'High'), null, ['placeholder' => 'Prioritas']) !!}
+               <div class="input-field col s12 m6">
+                    {!! Form::select('prioritas', array('Low' => 'Low', 'Medium' => 'Medium', 'High' => 'High'), null, ['class' => 'validate', 'placeholder' => 'Prioritas', 'required' => "", 'aria-required' => 'true']) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                     {!! Form::select('divisi', array('manajer akademik' => 'Akademik', 'manajer infrastruktur' => 'Infrastruktur', 'manajer sarpras' => 'Sarana dan Prasarana'), null, ['placeholder' => 'Divisi']) !!}
+                     {!! Form::select('divisi', array('manajer akademik' => 'Akademik', 'manajer infrastruktur' => 'Infrastruktur', 'manajer sarpras' => 'Sarana dan Prasarana'), null, ['class' => 'validate', 'placeholder' => 'Divisi', 'required' => "", 'aria-required' => 'true']) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                    {!! Form::textarea('judul', null, ['class' => 'materialize-textarea']) !!}
+                    {!! Form::textarea('judul', null, ['class' => 'materialize-textarea', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('judul', 'Judul') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l8">
-                    {!! Form::textarea('keluhan', null, ['class' => 'materialize-textarea']) !!}
+                    {!! Form::textarea('keluhan', null, ['class' => 'materialize-textarea', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('keluhan', 'Keluhan') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 l4">
-                    {!! Form::email('email', $email_mhs, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz']) !!}
+                    {!! Form::email('email', $email_mhs, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('email', 'Email') !!}
                 </div>
                 <div class="input-field col s12 l4">
-                    {!! Form::text('no_hp', $no_hp, ['class' => 'validate', 'placeholder' => '08**********']) !!}
+                    {!! Form::text('no_hp', $no_hp, ['class' => 'validate', 'placeholder' => '+62812********', 'pattern' => '^([0|\+[0-9]{1,5})?([1-9][0-9]{9})$', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>
