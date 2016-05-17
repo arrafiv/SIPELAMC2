@@ -39,7 +39,7 @@ class Controller extends BaseController
         $usernameSSO  = $user->username;
         $nameSSO  = $user->name;
         $roleSSO  = $user->role;
-        dd
+        
         $result = DB::table('users')->where('username', '=', $usernameSSO)->count();
         
         if ($bol == true){
