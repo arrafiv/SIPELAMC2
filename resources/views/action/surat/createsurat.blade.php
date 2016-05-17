@@ -35,11 +35,11 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 l4">
-                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz', 'required' => "", 'aria-required' => 'true']) !!}
+                    {!! Form::email('email', $email_mhs, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('email', 'Email') !!}
                 </div>
                 <div class="input-field col s12 l4">
-                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '+62812********', 'pattern' => '^([0|\+[0-9]{1,5})?([1-9][0-9]{9})$', 'required' => "", 'aria-required' => 'true']) !!}
+                    {!! Form::text('no_hp', $no_hp, ['class' => 'validate', 'placeholder' => '+62812********', 'pattern' => '^([0|\+[0-9]{1,5})?([1-9][0-9]{9})$', 'required' => "", 'aria-required' => 'true']) !!}
                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>

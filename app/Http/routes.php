@@ -100,6 +100,9 @@ Route::get('/keluhan/daftar-keluhan-diproses', 'Controller@getdaftarkeluhandipro
 #DELETE KELUHAN
 Route::get('/keluhan/daftar-keluhan/{id}','Controller@hapuskeluhan');
 
+#UPDATE KELUHAN
+Route::get('/keluhan/{id}/edit', 'Controller@editkeluhan');
+Route::post('/keluhan/{id}/edit', 'Controller@updatekeluhan');
 Route::post('/keluhan/{id}/editstatus', 'Controller@updatestatuskeluhan');
 
 #-----------------------USER (OLEH ADMIN)

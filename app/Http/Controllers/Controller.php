@@ -122,9 +122,15 @@ class Controller extends BaseController
         DB::table('kegiatans')->insert(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]); //terusin
         return view ('action/pengajuanijin/create');
     }
+    
     public function getcreateizin() 
     {
-        return view ('action/pengajuanijin/create');
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $no_hp = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('no_hp');
+        $email_mhs = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('email');
+        return view ('action/pengajuanijin/create', compact('email_mhs', 'no_hp'));
     }
     public function getdaftarizin()
     {
@@ -158,11 +164,13 @@ class Controller extends BaseController
         $j = -1;
         return view('action.pengajuanijin.listdaftarizin', compact('daftarizinmanajer', 'j'));
     }
+    
     public function editizin($id)
     {
         $izin = kegiatans::findOrFail($id);
         return view('action.pengajuanijin.editizin', compact('izin'));
     }
+    
     public function updateizin($id, Request $request)
     {
         $izin = kegiatans::findOrFail($id);
@@ -177,6 +185,7 @@ class Controller extends BaseController
         DB::table('kegiatans')->where('id', $id)->update(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon]);
         return redirect('pengajuanijin/daftar-izin');
     }
+
     public function updatestatusizin($id, Request $request){
         $input = $request->all();
         $status = $input['status'];
@@ -206,9 +215,29 @@ class Controller extends BaseController
         DB::table('pelayanan_akademiks')->insert(['tipe_surat' => $tipe_surat, 'keperluan' => $keperluan, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]); //terusin
         return view ('action/surat/createsurat');
     }
-    public function getsurat() 
+    
+    public function editsurat($id)
     {
-        return view ('action/surat/createsurat');
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $surat = pelayanan_akademiks::findOrFail($id);
+        $pemiliksurat = DB::table('pelayanan_akademiks')->where('id', '=', $id)->value('username');
+        $statusurat = DB::table('pelayanan_akademiks')->where('id', '=', $id)->value('status');
+        if($pemiliksurat == $usernameSSO && $statusurat == "Belum Diproses"){
+            return view('action.surat.editsurat', compact('surat'));
+        }
+        else {return view('errors/404');}
+    }
+    
+    public function getsurat() 
+    {   
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $no_hp = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('no_hp');
+        $email_mhs = DB::table('mahasiswas')->where('username', '=', $usernameSSO)->value('email');
+        return view ('action/surat/createsurat', compact('email_mhs', 'no_hp'));
     }
     public function getdaftarsurat() 
     {
@@ -236,21 +265,7 @@ class Controller extends BaseController
         $j = -1;
         return view('action.surat.lihatSuratSelesai', compact('surat', 'suratsekretariat', 'usernameSSO', 'j'));
     }
-    public function editsurat($id)
-    {
-        $bol = SSO::authenticate();
-        $user = SSO::getUser();
-        $usernameSSO  = $user->username;
-        $surat = pelayanan_akademiks::findOrFail($id);
-        $pemiliksurat = DB::table('pelayanan_akademiks')->where('id', '=', $id)->value('username');
-        $statusurat = DB::table('pelayanan_akademiks')->where('id', '=', $id)->value('status');
-        if($pemiliksurat == $usernameSSO && $statusurat == "Belum Diproses"){
-            return view('action.surat.editsurat', compact('surat'));
-        }
-        else {return view('errors/404');}
 
-        
-    }
     public function updatesurat($id, Request $request)
     {
         $surat = pelayanan_akademiks::findOrFail($id);
