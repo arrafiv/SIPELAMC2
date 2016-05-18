@@ -111,6 +111,13 @@ Route::post('/keluhan/{id}/editstatus', 'Controller@updatestatuskeluhan');
 Route::get('/daftar-user', 'Controller@getuser');
 Route::post('/daftar-user/{username}', 'Controller@updaterole');
 
+#-----------------------ANALYTICS
+
+#READ USER
+Route::get('/report/surat', 'Controller@showreportsurat');
+Route::get('/report/izin', 'Controller@showreportizin');
+Route::get('/report/keluhan', 'Controller@showreportkeluhan');
+
 
 
 

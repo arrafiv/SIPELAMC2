@@ -27,10 +27,12 @@ font-weight: 200;
 @endsection
 @extends('elements.element')
 @section('isi-side-nav')
+@if($roledatabase === "sekretariat")
 <li><a href="{{action('Controller@showcreateinfo')}}"><span class="pink-text text-darken-4">Buat Info</span></a></li>
 <li><a href="{{action('Controller@showinfokemahasiswaan')}}"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></a></li>
 <li><a href="{{action('Controller@getdaftarinfo')}}"><span class="pink-text text-darken-4">Published</span></a></li>
 <li><a href="{{action('Controller@getdaftarinfodraft')}}"><span class="pink-text text-darken-4">Draft</span></a></li>
+@endif
 @endsection
 @section('content')
 <div class="rowatasjudul">
@@ -49,19 +51,16 @@ font-weight: 200;
         <span class="breadcrumb" id="breadcrumb2">{{$judul}}</span>
     </div>
     <div class="row" id="info">
-        
-        <div class="center">
-            <div class="card hoverable">
-                <div class="card-image">
-                    <img src="{{URL::to('images/info_kemahasiswaan/' . $gambar)}}">
-                </div>
-                <div class="card-content">
-                    <h1 class="grey-text">{{$judul}}</h1>
-                    <p id="isi_info" class="grey-text">{{$isi_info}}</p>
-                    <br>
-                    <p id="time" class="grey-text right">{{$created_at}}</p>
-                    <br>
-                </div>
+        <div class="card hoverable">
+            <div class="card-image">
+                <img src="{{URL::to('images/info_kemahasiswaan/' . $gambar)}}">
+            </div>
+            <div class="card-content">
+                <h1 class="grey-text center-align">{{$judul}}</h1>
+                <p id="isi_info" class="grey-text">{!! str_replace("\n","<br>", $isi_info) !!} </p>
+                <br>
+                <p id="time" class="grey-text right">{{$created_at}}</p>
+                <br>
             </div>
         </div>
     </div>

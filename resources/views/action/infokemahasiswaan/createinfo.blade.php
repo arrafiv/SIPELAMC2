@@ -44,7 +44,7 @@ margin-top: 2em;
         </div>
         <div class="row">
             <div class="input-field col s12 l6">
-                {!! Form::text('judul', null, ['class' => 'validate', 'placeholder' => 'Judul Info', 'required' => "", 'aria-required' => 'true']) !!}
+                {!! Form::text('judul', null, ['class' => 'validate', 'placeholder' => 'Judul Info']) !!}
                 {!! Form::label('icon_telephone', 'Judul') !!}
             </div>
         </div>

@@ -38,6 +38,9 @@
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
                             </div>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showreportsurat')}}"><img src="{{URL::to('src/analytics-01.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Analisis dan Report</span></div>
+                            </div>
 
                             <!-- MANAJER AKADEMIK -->
                             @elseif ($role === "manajer akademik")
@@ -50,6 +53,9 @@
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
                             </div>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showreportizin')}}"><img src="{{URL::to('src/analytics-01.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Analisis dan Report</span></div>
+                            </div>
 
                             <!-- MANAJER SARPRAS -->
                             @elseif ($role === "manajer sarpras")
@@ -59,6 +65,9 @@
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarkeluhan')}}"><img src="{{URL::to('src/assethome-03.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showreportkeluhan')}}"><img src="{{URL::to('src/analytics-01.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Analisis dan Report</span></div>
+                            </div>
 
                             <!-- MANAJER INFRASTRUKTUR -->
                             @elseif ($role === "manajer infrastruktur")
@@ -67,6 +76,9 @@
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getdaftarkeluhan')}}"><img src="{{URL::to('src/assethome-03.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
+                            </div>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showreportkeluhan')}}"><img src="{{URL::to('src/analytics-01.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Analisis dan Report</span></div>
                             </div>
 
                              <!-- MAHASISWA -->
@@ -117,11 +129,11 @@
                           {!! Form::open(['url' => 'action/home']) !!}
                             <div class="row">
                                 <div class="input-field col s12 l4">
-                                    {!! Form::email('email', null, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz']) !!}
+                                    {!! Form::email('email', $email, ['class' => 'validate', 'placeholder' => 'xxx@yyy.zzz', 'required' => "", 'aria-required' => 'true']) !!}
                                     {!! Form::label('email', 'Email') !!}
                                 </div>
                                 <div class="input-field col s12 l4">
-                                    {!! Form::text('no_hp', null, ['class' => 'validate', 'placeholder' => '08**********']) !!}
+                                    {!! Form::text('no_hp', $no_hp, ['class' => 'validate', 'placeholder' => '08**********', 'pattern' => '^([0|\+[0-9]{1,5})?([1-9][0-9]{9})$', 'required' => "", 'aria-required' => 'true']) !!}
                                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                                 </div>
                             </div>

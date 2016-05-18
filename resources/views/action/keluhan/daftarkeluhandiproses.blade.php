@@ -35,6 +35,7 @@ margin-top: 10em;
                         <th data-field="divisi">Pembuat</th>
                         <th data-field="keluhan">Keluhan</th>
                         <th data-field="status">Status</th>
+                        <th class="center-align" data-field="action">Action</th>
                     </tr>
                 </thead>
                 <tbody>

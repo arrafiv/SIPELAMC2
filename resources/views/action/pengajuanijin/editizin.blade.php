@@ -60,6 +60,12 @@
                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>
+            <div class="row">
+            <div class="input-field col s12 l8">
+                {!! Form::text('file', null, ['class' => 'validate', 'placeholder' => 'Sertakan link file proposal, link Google Drive atau Dropbox', 'pattern' => "https?://.+", 'required' => "", 'aria-required' => 'true']) !!}
+                {!! Form::label('[proposal]', 'Proposal - Format: http:// atau https://') !!}
+            </div>
+        </div>
             <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Izin Berhasil Diubah', 4000)">SUBMIT</button>
         {!! Form::close() !!}
     </div>

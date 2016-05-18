@@ -37,14 +37,14 @@ margin-top: 2em;
                         <input type="file" name="image" accept="image/x-png, image/gif, image/jpeg">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
+                        <input class="file-path validate" type="text" value="{!! $gambar !!}">
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 l6">
-                {!! Form::text('judul', null, ['class' => 'validate', 'placeholder' => 'Judul Info', 'required' => "", 'aria-required' => 'true']) !!}
+                {!! Form::text('judul', null, ['class' => 'validate', 'placeholder' => 'Judul Info']) !!}
                 {!! Form::label('icon_telephone', 'Judul') !!}
             </div>
         </div>

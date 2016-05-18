@@ -23,6 +23,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class Controller extends BaseController
@@ -90,11 +91,11 @@ class Controller extends BaseController
 #----------------------------UPDATE PROFILE-------------------------------------
 
 
-    public function updatemahasiswa(Request $updateanmahasiswa)
+    public function updatemahasiswa(Request $request)
     {
         $bol = SSO::authenticate();
         $user = SSO::getUser();
-        $input = $updateanmahasiswa->all();
+        $input = $request->all();
         $email=$input['email'];
         $telepon=$input['no_hp'];
         DB::table('mahasiswas')->where('username', $user->username)->update(['email' => $email, 'no_hp' => $telepon]);
@@ -106,12 +107,12 @@ class Controller extends BaseController
 #----------------------------PENGAJUAN IZIN-------------------------------------
 
 
-    public function createizin(Request $kegiatans)
+    public function createizin(Request $request)
     {
         $bol = SSO::authenticate();
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
-        $input = $kegiatans->all();
+        $input = $request->all();
         $nama_kegiatan=$input['nama'];
         $penyelenggara=$input['penyelenggara'];
         $tanggal_mulai_kegiatan = date_create($input['tanggal_mulai_kegiatan']); 
@@ -119,8 +120,13 @@ class Controller extends BaseController
         $deskripsi=$input['deskripsi'];
         $email=$input['email'];
         $telepon=$input['no_hp'];
-        DB::table('kegiatans')->insert(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]); //terusin
-        return view ('action/pengajuanijin/create');
+        $file=$input['file'];
+        kegiatans::create(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'file' => $file]);
+        Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses"], function($message) use ($email, $usernameSSO)
+        {
+            $message->to($email, $usernameSSO)->subject("Pengajuan Izin");   
+        });
+        return redirect ('pengajuanijin');
     }
     
     public function getcreateizin() 
@@ -182,14 +188,25 @@ class Controller extends BaseController
         $deskripsi=$input['deskripsi'];
         $email=$input['email'];
         $telepon=$input['no_hp'];
-        DB::table('kegiatans')->where('id', $id)->update(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon]);
+        $file=$input['file'];
+        DB::table('kegiatans')->where('id', $id)->update(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'file' => $file]);
+        Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses"], function($message) use ($email, $usernameSSO)
+        {
+            $message->to($email, $usernameSSO)->subject("Pengajuan Izin");   
+        });
         return redirect('pengajuanijin/daftar-izin');
     }
 
     public function updatestatusizin($id, Request $request){
+        $izin = kegiatans::findOrFail($id);
         $input = $request->all();
         $status = $input['status'];
+        $pesan = $input['pesan'];
         DB::table('kegiatans')->where('id', $id)->update(['status' => $status]);
+        Mail::send('emails.e_izinmhs', ['status' => $status, 'pesan' => $pesan], function($message) use ($izin)
+        {
+            $message->to($izin->email, $izin->username)->subject("Pengajuan Izin");   
+        });
         return redirect('pengajuanijin/daftar-izin');
     }
     public function hapusizin($id)
@@ -212,8 +229,13 @@ class Controller extends BaseController
         $keperluan=$input['keperluan'];
         $email=$input['email'];
         $telepon=$input['no_hp'];
-        DB::table('pelayanan_akademiks')->insert(['tipe_surat' => $tipe_surat, 'keperluan' => $keperluan, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]); //terusin
-        return view ('action/surat/createsurat');
+        Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses"], function($message) use ($email, $usernameSSO)
+        {
+            $message->to($email, $usernameSSO)->subject("Permohonan Surat");   
+        });
+        pelayanan_akademiks::create(['tipe_surat' => $tipe_surat, 'keperluan' => $keperluan, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]);
+        
+        return redirect ('surat');
     }
     
     public function editsurat($id)
@@ -270,13 +292,22 @@ class Controller extends BaseController
     {
         $surat = pelayanan_akademiks::findOrFail($id);
         $surat->update($request->all());
+        Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses"], function($message) use ($surat)
+        {
+            $message->to($surat->email, $surat->username)->subject("Permohonan Surat");   
+        });
         return redirect('surat/daftar-surat');
     }
     public function updatestatussurat($id, Request $request)
     {
+        $surat = pelayanan_akademiks::findOrFail($id);
         $input = $request->all();
         $status = $input['status'];
         DB::table('pelayanan_akademiks')->where('id', $id)->update(['status' => $status]);
+        Mail::send('emails.e_suratmhs', ['status' => $status], function($message) use ($surat)
+        {
+            $message->to($surat->email, $surat->username)->subject("Permohonan Surat");   
+        });
         return redirect('surat/daftar-surat');
     }
     public function hapussurat($id)
@@ -364,9 +395,10 @@ class Controller extends BaseController
         $user = SSO::getUser();
         $usernameSSO  = $user->username;
         $pembuatinfo = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $gambar = DB::table('info_kemahasiswaans')->where('id', '=', $id)->value('gambar');
         $info = info_kemahasiswaans::findOrFail($id);
         if($pembuatinfo == "sekretariat"){
-            return view('action.infokemahasiswaan.editinfo', compact('info'));
+            return view('action.infokemahasiswaan.editinfo', compact('info', 'gambar'));
         }
         else{
             return view('errors/404');
@@ -465,6 +497,10 @@ class Controller extends BaseController
         $imageName = $keluhanid . '.' . $extension;
         
         DB::table('keluhans')->where('id', $keluhanid)->update(['gambar' => $imageName]);
+        Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses"], function($message) use ($email, $usernameSSO)
+        {
+            $message->to($email, $usernameSSO)->subject("Keluhan dan Saran");   
+        });
         
         return redirect ('keluhan');
     }
@@ -510,18 +546,61 @@ class Controller extends BaseController
         $j = -1;
         
          // KELUHAN DIPROSES
-        $keluhandiproses = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->where('status', '=', 'diproses')->get();
+        $keluhandiproses = DB::table('keluhans')->join('users', 'users.username', '=', 'keluhans.username' )->join('mahasiswas', 'mahasiswas.username', '=', 'keluhans.username' )->where('divisi', '=', $roledatabase)->where('status', '=', 'Diterima')->get();
         
         return view('action.keluhan.daftarkeluhandiproses', compact('keluhandiproses', 'j'));
     }
     
     public function updatestatuskeluhan($id, Request $request){
+        $keluhan = keluhans::findOrFail($id);  
         $input = $request->all();
         $status = $input['status'];
+        $pesan = $input['pesan'];
         DB::table('keluhans')->where('id', $id)->update(['status' => $status]);
+        Mail::send('emails.e_keluhanmhs', ['status' => $status, 'pesan' => $pesan], function($message) use ($keluhan)
+        {
+            $message->to($keluhan->email, $keluhan->username)->subject("Keluhan dan Saran");   
+        });
         return redirect('keluhan/daftar-keluhan');
     }
     
+    public function editkeluhan($id)        
+    {       
+        $keluhan = keluhans::findOrFail($id);       
+        return view('action.keluhan.editkeluhan', compact('keluhan'));      
+    }       
+            
+    public function updatekeluhan($id, Request $request)        
+    {       
+        $bol = SSO::authenticate();     
+        $user = SSO::getUser();     
+        $usernameSSO  = $user->username;        
+        $keluhan = keluhans::findOrFail($id);       
+        $input = $request->all();       
+        $prioritas=$input['prioritas'];     
+        $divisi=$input['divisi'];       
+        $telepon=$input['no_hp'];       
+        $keluhan=$input['keluhan'];     
+        $judul=$input['judul'];     
+        $email=$input['email'];     
+        $telepon=$input['no_hp'];       
+            
+        DB::table('keluhans')->where('id', $id)->update(['prioritas' => $prioritas, 'divisi' => $divisi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'keluhan' => $keluhan, 'judul' => $judul]);      
+                
+        $mime = Image::make(Input::file('image'))->mime();      
+        $extension = substr($mime, 6);      
+        Image::make(Input::file('image'))->resize(350, null, function ($constraint) {$constraint->aspectRatio();})->save(base_path() . '/public/images/keluhan/' . $keluhanid . '.' . $extension);      
+        $imageName = $keluhanid . '.' . $extension;     
+                
+        DB::table('keluhans')->where('id', $keluhanid)->update(['gambar' => $imageName]);
+
+        Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses"], function($message) use ($email, $usernameSSO)
+        {
+            $message->to($email, $usernameSSO)->subject("Keluhan dan Saran");   
+        });            
+        return redirect('keluhan/daftar-keluhan');      
+    }
+
     public function hapuskeluhan($id)
     {
         DB::table('keluhans') -> where('id','=', $id) -> delete();
@@ -553,6 +632,60 @@ class Controller extends BaseController
         return redirect('daftar-user');
     }
 
+#----------------------------ANALYTICS AND REPORT---------------------------------------
 
+    public function showreportsurat() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $thisMonth = date('m');
+        $thisMonthString = date('M');
+
+        #SURAT-SURAT
+        $suratCountAll = DB::table('pelayanan_akademiks')->count();
+        $suratCountThisMonth = DB::table('pelayanan_akademiks')->whereMonth('created_at', '=', $thisMonth)->count();
+        $suratCountBelumDiproses = DB::table('pelayanan_akademiks')->where('status', '=', "Belum Diproses")->count();
+        $suratCountPerBulan = DB::table('pelayanan_akademiks')->select( DB::raw('count(*) as jumlah, MONTHNAME(created_at) as bulan'))->groupBy(DB::raw('MONTH(created_at)'))->get();
+        return view ('action/analytics/reportsurat', compact('roledatabase', 'suratCountAll', 'suratCountThisMonth', 'thisMonthString', 'suratCountBelumDiproses', 'suratCountPerBulan'));
+    }
+    public function showreportizin() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $thisMonth = date('m');
+        $thisMonthString = date('M');
+
+        #PENGAJUAN IJIN
+        $izinCountAll = DB::table('kegiatans')->count();
+        $izinThisMonth = DB::table('kegiatans')->whereMonth('created_at', '=', $thisMonth)->count();
+        $izinBelumDiproses = DB::table('kegiatans')->where('status', '=', "Belum Diproses")->count();
+        $izinTidakDisetujui = DB::table('kegiatans')->where('status', '=', "Tidak Disetujui")->count();
+        $izinDisetujui = DB::table('kegiatans')->where('status', '=', "Disetujui")->count();
+        $izinDiproses = DB::table('kegiatans')->where('status', '=', "Diproses")->count();
+        $izinSelesai = DB::table('kegiatans')->where('status', '=', "Selesai")->count();
+        $izinCountPerBulan = DB::table('kegiatans')->select( DB::raw('count(*) as jumlah, MONTHNAME(created_at) as bulan'))->groupBy(DB::raw('MONTH(created_at)'))->get();
+        return view ('action/analytics/reportizin', compact('roledatabase', 'thisMonthString', 'izinCountAll', 'izinThisMonth', 'izinBelumDiproses', 'izinTidakDisetujui', 'izinDisetujui', 'izinDiproses', 'izinSelesai', 'izinCountPerBulan'));
+    }
+    public function showreportkeluhan() 
+    {
+        $bol = SSO::authenticate();
+        $user = SSO::getUser();
+        $usernameSSO  = $user->username;
+        $roledatabase = DB::table('users')->where('username', '=', $usernameSSO)->value('role');
+        $thisMonth = date('m');
+        $thisMonthString = date('M');
+
+        #PENGAJUAN IJIN
+        $keluhanCountAll = DB::table('keluhans')->where('divisi', '=', $roledatabase)->count();
+        $keluhanCountThisMonth = DB::table('keluhans')->whereMonth('created_at', '=', $thisMonth)->where('divisi', '=', $roledatabase)->count();
+        $keluhanCountBelumDiproses = DB::table('keluhans')->where('status', '=', "Belum Diproses")->where('divisi', '=', $roledatabase)->count();
+        $keluhanDiproses = DB::table('keluhans')->where('status', '=', "Diproses")->where('divisi', '=', $roledatabase)->count();
+        $keluhanCountPerBulan = DB::table('keluhans')->select( DB::raw('count(*) as jumlah, MONTHNAME(created_at) as bulan'))->groupBy(DB::raw('MONTH(created_at)'))->where('divisi', '=', $roledatabase)->get();
+        return view ('action/analytics/reportkeluhan', compact('roledatabase', 'thisMonthString', 'keluhanCountAll', 'keluhanCountThisMonth', 'keluhanCountBelumDiproses', 'keluhanCountPerBulan'));
+    }
 
 }

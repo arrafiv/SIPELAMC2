@@ -54,6 +54,7 @@
                             <th data-field="nama">Nama</th>
                             <th data-field="tipe_surat">Tipe Surat</th>
                             <th data-field="status">Status</th>
+                            <th data-field="status">Tanggal Pengajuan</th>
                             <th class="center-align" data-field="action">Action</th>
                         @endif
                         </tr>
@@ -124,6 +125,7 @@
                             <td>{{$suratt->nama}}</td>
                             <td>{{$suratt->tipe_surat}}</td>
                             <td>{{$suratt->status}}</td>
+                            <td>{{$suratt->updated_at}}</td>
                             <td>
                                 <div class="center-align">
                                     <a href class="modal-trigger" data-target="{{$i}}"><i class="material-icons pink-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Update">swap_vert</i></a>

@@ -64,12 +64,14 @@
                 <th data-field="nama">Nama</th>
                 <th data-field="nama_kegiatan">Nama Kegiatan</th>
                 <th data-field="penyelenggara">Penyelenggara</th>
+                <th data-field="tanggal_pengajuan">Tanggal Pengajuan</th>
                 <th data-field="status">Status</th>
                 <th class="center-align" data-field="Action">Action</th>
             @elseif($roledatabase === "manajer akademik")
                 <th data-field="nama">Nama</th>
                 <th data-field="nama_kegiatan">Nama Kegiatan</th>
                 <th data-field="penyelenggara">Penyelenggara</th>
+                <th data-field="tanggal_pengajuan">Tanggal Pengajuan</th>
                 <th data-field="status">Status</th>
                 <th class="center-align" data-field="Action">Action</th>
             @endif
@@ -128,7 +130,9 @@
                           <p>{{$daftarizinn->tanggal_mulai_kegiatan}} - {{$daftarizinn->tanggal_selesai_kegiatan}}</p>
                           <br>
                           <h6 class="pink-text text-darken-4">Kontak</h6>
-                          <p>{{$daftarizinn->email}} | {{$daftarizinn->no_hp}}</p> 
+                          <p>{{$daftarizinn->email}} | {{$daftarizinn->no_hp}}</p>
+                          <h6 class="pink-text text-darken-4">File</h6>
+                          <p><a href="{{$daftarizinn->file}}">{{$daftarizinn->file}}</a></p> 
                         </div>
                         <div class="modal-footer">
                           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
@@ -143,6 +147,7 @@
                 <td>{{$daftarizinn->nama}}</td>
                 <td>{{$daftarizinn->nama_kegiatan}}</td>
                 <td>{{$daftarizinn->penyelenggara}}</td>
+                <td>{{$daftarizinn->updated_at}}</td>
                 <td>{{$daftarizinn->status}}</td>
                 <td>
                     <div class="center-align">
@@ -188,7 +193,9 @@
                           <p>{{$daftarizinn->tanggal_mulai_kegiatan}} - {{$daftarizinn->tanggal_selesai_kegiatan}}</p>
                           <br>
                           <h6 class="pink-text text-darken-4">Kontak</h6>
-                          <p>{{$daftarizinn->email}} | {{$daftarizinn->no_hp}}</p> 
+                          <p>{{$daftarizinn->email}} | {{$daftarizinn->no_hp}}</p>
+                          <h6 class="pink-text text-darken-4">File</h6>
+                          <p><a href="{{$daftarizinn->file}}">{{$daftarizinn->file}}</a></p> 
                         </div>
                         <div class="modal-footer">
                           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
@@ -203,6 +210,7 @@
                 <td>{{$daftarizinn->nama}}</td>
                 <td>{{$daftarizinn->nama_kegiatan}}</td>
                 <td>{{$daftarizinn->penyelenggara}}</td>
+                <td>{{$daftarizinn->updated_at}}</td>
                 <!-- <td>{{$daftarizinn->deskripsi}}</td> -->
                 <td>{{$daftarizinn->status}}</td>
                 <td>
@@ -215,13 +223,21 @@
                     <div id="{{$i++}}" class="modal">
                         <div class="modal-content">
                           {!! Form::model($daftarizinn, ['action' => ['Controller@updatestatusizin', $daftarizinn->id]]) !!}
+                          <div class="row">
                             <div class="input-field col s12">
-                            <select name="status" >
-                              <option value="" disabled selected>Choose your option</option>
-                              <option value="Disetujui">Disetujui</option>
-                              <option value="Tidak Disetujui">Tidak Disetujui</option>
-                            </select>
-                            <label>UBAH STATUS SURAT IZIN</label>
+                              <select name="status" >
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="Disetujui">Disetujui</option>
+                                <option value="Tidak Disetujui">Tidak Disetujui</option>
+                              </select>
+                              <label>UBAH STATUS SURAT IZIN</label>
+                            </div>
+                          </div>
+                          <div class="row">
+                              <div class="input-field col s12 l12">
+                                  {!! Form::textarea('pesan', null, ['class' => 'materialize-textarea', 'required' => "", 'aria-required' => 'true']) !!}
+                                  {!! Form::label('pesan', 'Pesan Kepada Mahasiswa') !!}
+                              </div>
                           </div>
                           <div class="row">
                              <button class="waves-effect waves-light btn pink darken-4" id="buttonmodal">SUBMIT</button>
@@ -247,7 +263,9 @@
                           <p>{{$daftarizinn->tanggal_mulai_kegiatan}} - {{$daftarizinn->tanggal_selesai_kegiatan}}</p>
                           <br>
                           <h6 class="pink-text text-darken-4">Kontak</h6>
-                          <p>{{$daftarizinn->email}} | {{$daftarizinn->no_hp}}</p> 
+                          <p>{{$daftarizinn->email}} | {{$daftarizinn->no_hp}}</p>
+                          <h6 class="pink-text text-darken-4">File</h6>
+                          <p><a href="{{$daftarizinn->file}}">{{$daftarizinn->file}}</a></p> 
                         </div>
                         <div class="modal-footer">
                           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CLOSE</a>
