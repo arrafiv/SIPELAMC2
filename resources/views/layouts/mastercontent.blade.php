@@ -6,11 +6,10 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{URL::to('materialize/css/materialize.css')}}">
     <link rel="stylesheet" href="{{URL::to('material/dataTables.material.css')}}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{URL::to('dist/sweetalert.css')}}">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    <script type="text/javascript" src="{{URL::to('materialize/js/jquery-2.1.4.js')}}"></script>
+    <script type="text/javascript" src="{{URL::to('materialize/js/loader.js')}}"></script>
+    <script src="{{URL::to('materialize/js/materialize.min.js')}}"></script>
     <script src="{{URL::to('material/jquery.dataTables.js')}}"></script>
     <script src="{{URL::to('material/dataTables.material.js')}}"></script>
     @yield('styles')
@@ -48,8 +47,7 @@
     }
     h4{
         font-weight: 200;
-    }
-        
+    }   
     </style>
 </head>
 

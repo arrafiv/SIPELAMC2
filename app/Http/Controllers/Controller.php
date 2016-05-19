@@ -137,21 +137,21 @@ class Controller extends BaseController
         $telepon=$input['no_hp'];
         $file=$input['file'];
         kegiatans::create(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'file' => $file]);
-        if ($email != "") {
-            Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
-            {
-                $message->to($email, $usernameSSO)->subject("Pengajuan Izin");   
-            });
-        }
-        $manajerakademik = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "manajer akademik")->get();
-        foreach ($manajerakademik as $manajer) {
-            if ($manajer->email != "") {
-                Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
-                {
-                    $message->to($manajer->email, $usernameSSO)->subject("Pengajuan Izin");   
-                });
-            }
-        }
+        // if ($email != "") {
+        //     Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
+        //     {
+        //         $message->to($email, $usernameSSO)->subject("Pengajuan Izin");   
+        //     });
+        // }
+        // $manajerakademik = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "manajer akademik")->get();
+        // foreach ($manajerakademik as $manajer) {
+        //     if ($manajer->email != "") {
+        //         Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
+        //         {
+        //             $message->to($manajer->email, $usernameSSO)->subject("Pengajuan Izin");   
+        //         });
+        //     }
+        // }
         return redirect ('pengajuanijin');
     }
     
@@ -218,21 +218,21 @@ class Controller extends BaseController
         $telepon=$input['no_hp'];
         $file=$input['file'];
         DB::table('kegiatans')->where('id', $id)->update(['nama_kegiatan' => $nama_kegiatan, 'penyelenggara' => $penyelenggara, 'tanggal_mulai_kegiatan' => $tanggal_mulai_kegiatan, 'tanggal_selesai_kegiatan' => $tanggal_selesai_kegiatan, 'deskripsi' => $deskripsi, 'email' => $email, 'no_hp' => $telepon, 'file' => $file]);
-        if ($email != "") {
-            Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
-            {
-                $message->to($email, $usernameSSO)->subject("Pengajuan Izin");   
-            });
-        }
-        $manajerakademik = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "manajer akademik")->get();
-        foreach ($manajerakademik as $manajer) {
-            if ($manajer->email != "") {
-                Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
-                {
-                    $message->to($manajer->email, $usernameSSO)->subject("Pengajuan Izin");   
-                });
-            }
-        }
+        // if ($email != "") {
+        //     Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
+        //     {
+        //         $message->to($email, $usernameSSO)->subject("Pengajuan Izin");   
+        //     });
+        // }
+        // $manajerakademik = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "manajer akademik")->get();
+        // foreach ($manajerakademik as $manajer) {
+        //     if ($manajer->email != "") {
+        //         Mail::send('emails.e_izinmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
+        //         {
+        //             $message->to($manajer->email, $usernameSSO)->subject("Pengajuan Izin");   
+        //         });
+        //     }
+        // }
         return redirect('pengajuanijin/daftar-izin');
     }
 
@@ -245,21 +245,21 @@ class Controller extends BaseController
         $input = $request->all();
         $status = $input['status'];
         DB::table('kegiatans')->where('id', $id)->update(['status' => $status]);
-        if ($izin->email != "") {
-            if ($roledatabase == "sekretariat") {
-                Mail::send('emails.e_izinmhs', ['status' => $status, 'tostaffpenting' => "no"], function($message) use ($izin)
-                {
-                    $message->to($izin->email, $izin->username)->subject("Pengajuan Izin");   
-                });
-            }
-            else{
-                $pesan = $input['pesan'];
-                Mail::send('emails.e_izinmhs', ['status' => $status, 'pesan' => $pesan, 'tostaffpenting' => "no"], function($message) use ($izin)
-                {
-                    $message->to($izin->email, $izin->username)->subject("Pengajuan Izin");   
-                });
-            }
-        }
+        // if ($izin->email != "") {
+        //     if ($roledatabase == "sekretariat") {
+        //         Mail::send('emails.e_izinmhs', ['status' => $status, 'tostaffpenting' => "no"], function($message) use ($izin)
+        //         {
+        //             $message->to($izin->email, $izin->username)->subject("Pengajuan Izin");   
+        //         });
+        //     }
+        //     else{
+        //         $pesan = $input['pesan'];
+        //         Mail::send('emails.e_izinmhs', ['status' => $status, 'pesan' => $pesan, 'tostaffpenting' => "no"], function($message) use ($izin)
+        //         {
+        //             $message->to($izin->email, $izin->username)->subject("Pengajuan Izin");   
+        //         });
+        //     }
+        // }
         return redirect('pengajuanijin/daftar-izin');
     }
     public function hapusizin($id)
@@ -284,21 +284,21 @@ class Controller extends BaseController
         $telepon=$input['no_hp'];
         pelayanan_akademiks::create(['tipe_surat' => $tipe_surat, 'keperluan' => $keperluan, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses"]);
 
-        $sekretariat = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "sekretariat")->get();
-        if ($email != "") {
-             Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
-            {
-                $message->to($email, $usernameSSO)->subject("Permohonan Surat");   
-            });
-        }
-        foreach ($sekretariat as $sekre) {
-            if ($sekre->email != "") {
-                Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($sekre, $usernameSSO)
-                {
-                    $message->to($sekre->email, $usernameSSO)->subject("Permohonan Surat");   
-                });
-            }
-        }
+        // $sekretariat = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "sekretariat")->get();
+        // if ($email != "") {
+        //      Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
+        //     {
+        //         $message->to($email, $usernameSSO)->subject("Permohonan Surat");   
+        //     });
+        // }
+        // foreach ($sekretariat as $sekre) {
+        //     if ($sekre->email != "") {
+        //         Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($sekre, $usernameSSO)
+        //         {
+        //             $message->to($sekre->email, $usernameSSO)->subject("Permohonan Surat");   
+        //         });
+        //     }
+        // }
         return redirect ('surat');
     }
     
@@ -356,21 +356,21 @@ class Controller extends BaseController
     {
         $surat = pelayanan_akademiks::findOrFail($id);
         $surat->update($request->all());
-        $sekretariat = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "sekretariat")->get();
-        if ($surat->email != "") {
-            Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($surat)
-            {
-                $message->to($surat->email, $surat->username)->subject("Permohonan Surat");   
-            });
-        }
-        foreach ($sekretariat as $sekre) {
-            if ($sekre->email != "") {
-                Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($sekre)
-                {
-                    $message->to($sekre->email, $sekre->username)->subject("Permohonan Surat");   
-                });
-            }
-        }
+        // $sekretariat = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', "sekretariat")->get();
+        // if ($surat->email != "") {
+        //     Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($surat)
+        //     {
+        //         $message->to($surat->email, $surat->username)->subject("Permohonan Surat");   
+        //     });
+        // }
+        // foreach ($sekretariat as $sekre) {
+        //     if ($sekre->email != "") {
+        //         Mail::send('emails.e_suratmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($sekre)
+        //         {
+        //             $message->to($sekre->email, $sekre->username)->subject("Permohonan Surat");   
+        //         });
+        //     }
+        // }
         return redirect('surat/daftar-surat');
     }
     public function updatestatussurat($id, Request $request)
@@ -379,12 +379,12 @@ class Controller extends BaseController
         $input = $request->all();
         $status = $input['status'];
         DB::table('pelayanan_akademiks')->where('id', $id)->update(['status' => $status]);
-        if ($surat->email != "") {
-            Mail::send('emails.e_suratmhs', ['status' => $status, 'tostaffpenting' => "no"], function($message) use ($surat)
-            {
-                $message->to($surat->email, $surat->username)->subject("Permohonan Surat");   
-            });
-        }
+        // if ($surat->email != "") {
+        //     Mail::send('emails.e_suratmhs', ['status' => $status, 'tostaffpenting' => "no"], function($message) use ($surat)
+        //     {
+        //         $message->to($surat->email, $surat->username)->subject("Permohonan Surat");   
+        //     });
+        // }
         return redirect('surat/daftar-surat');
     }
     public function hapussurat($id)
@@ -556,22 +556,22 @@ class Controller extends BaseController
         $telepon=$input['no_hp'];
         $keluhan=$input['keluhan'];
         $judul=$input['judul'];
-        $manajerterkait = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', $divisi)->get();
+        // $manajerterkait = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', $divisi)->get();
         $keluhanid = keluhans::create(['prioritas' => $prioritas, 'divisi' => $divisi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'keluhan' => $keluhan, 'judul' => $judul])->id;
-        if ($email != "") {
-            Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
-            {
-                $message->to($email, $usernameSSO)->subject("Keluhan dan Saran");   
-            });
-        }
-        foreach ($manajerterkait as $manajer) {
-            if ($manajer->email != "") {
-                Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
-                {
-                    $message->to($manajer->email, $usernameSSO)->subject("Keluhan dan Saran");   
-                });
-            }
-        }
+        // if ($email != "") {
+        //     Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
+        //     {
+        //         $message->to($email, $usernameSSO)->subject("Keluhan dan Saran");   
+        //     });
+        // }
+        // foreach ($manajerterkait as $manajer) {
+        //     if ($manajer->email != "") {
+        //         Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
+        //         {
+        //             $message->to($manajer->email, $usernameSSO)->subject("Keluhan dan Saran");   
+        //         });
+        //     }
+        // }
         if(Input::hasFile('image')){
             $mime = Image::make(Input::file('image'))->mime();
             $extension = substr($mime, 6);
@@ -637,12 +637,12 @@ class Controller extends BaseController
         $status = $input['status'];
         $pesan = $input['pesan'];
         DB::table('keluhans')->where('id', $id)->update(['status' => $status]);
-        if ($keluhan->email != "") {
-            Mail::send('emails.e_keluhanmhs', ['status' => $status, 'pesan' => $pesan, 'tostaffpenting' => "no"], function($message) use ($keluhan)
-            {
-                $message->to($keluhan->email, $keluhan->username)->subject("Keluhan dan Saran");   
-            });
-        }
+        // if ($keluhan->email != "") {
+        //     Mail::send('emails.e_keluhanmhs', ['status' => $status, 'pesan' => $pesan, 'tostaffpenting' => "no"], function($message) use ($keluhan)
+        //     {
+        //         $message->to($keluhan->email, $keluhan->username)->subject("Keluhan dan Saran");   
+        //     });
+        // }
         return redirect('keluhan/daftar-keluhan');
     }
     
@@ -669,21 +669,21 @@ class Controller extends BaseController
         $telepon=$input['no_hp'];       
         DB::table('keluhans')->where('id', $id)->update(['prioritas' => $prioritas, 'divisi' => $divisi, 'email' => $email, 'no_hp' => $telepon, 'username' => $usernameSSO, 'status' => "Belum Diproses", 'keluhan' => $keluhan, 'judul' => $judul]);
         
-        $manajerterkait = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', $divisi)->get();
-        if ($email != "") {
-            Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
-            {
-                $message->to($email, $usernameSSO)->subject("Keluhan dan Saran");   
-            });
-        }
-        foreach ($manajerterkait as $manajer) {
-            if ($manajer->email != "") {
-                Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
-                {
-                    $message->to($manajer->email, $usernameSSO)->subject("Keluhan dan Saran");   
-                });
-            }
-        }
+        // $manajerterkait = DB::table('staffs')->join('users', 'staffs.username', '=', 'users.username' )->where('role', '=', $divisi)->get();
+        // if ($email != "") {
+        //     Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "no"], function($message) use ($email, $usernameSSO)
+        //     {
+        //         $message->to($email, $usernameSSO)->subject("Keluhan dan Saran");   
+        //     });
+        // }
+        // foreach ($manajerterkait as $manajer) {
+        //     if ($manajer->email != "") {
+        //         Mail::send('emails.e_keluhanmhs', ['status' => "Belum Diproses", 'tostaffpenting' => "yes"], function($message) use ($manajer, $usernameSSO)
+        //         {
+        //             $message->to($manajer->email, $usernameSSO)->subject("Keluhan dan Saran");   
+        //         });
+        //     }
+        // }
         if(Input::hasFile('image')){
             $mime = Image::make(Input::file('image'))->mime();
             $extension = substr($mime, 6);
