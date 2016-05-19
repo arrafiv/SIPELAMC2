@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row">
-        {!! Form::model($keluhan, ['action' => ['Controller@updatekeluhan', $keluhan->id]]) !!}
+        {!! Form::model($keluhan, ['action' => ['Controller@updatekeluhan', $keluhan->id], 'files' => true]) !!}
         <div class="row">
             <div class="input-field col s12 m6">
                 {!! Form::select('prioritas', array('Low' => 'Low', 'Medium' => 'Medium', 'High' => 'High'), null, ['class' => 'validate', 'placeholder' => 'Prioritas', 'required' => "", 'aria-required' => 'true']) !!}

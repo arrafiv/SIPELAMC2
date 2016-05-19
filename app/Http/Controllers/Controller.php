@@ -687,9 +687,9 @@ class Controller extends BaseController
         if(Input::hasFile('image')){
             $mime = Image::make(Input::file('image'))->mime();
             $extension = substr($mime, 6);
-            Image::make(Input::file('image'))->resize(350, null, function ($constraint) {$constraint->aspectRatio();})->save(base_path() . '/public/images/keluhan/' . $keluhanid . '.' . $extension);
-            $imageName = $keluhanid . '.' . $extension;
-            DB::table('keluhans')->where('id', $keluhanid)->update(['gambar' => $imageName]);
+            Image::make(Input::file('image'))->resize(350, null, function ($constraint) {$constraint->aspectRatio();})->save(base_path() . '/public/images/keluhan/' . $id . '.' . $extension);
+            $imageName = $id . '.' . $extension;
+            DB::table('keluhans')->where('id', $id)->update(['gambar' => $imageName]);
             return redirect ('keluhan');
         }
         else{
