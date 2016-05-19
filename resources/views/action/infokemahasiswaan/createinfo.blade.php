@@ -55,8 +55,10 @@ margin-top: 2em;
             </div>
         </div>
         <div class="row" id="buttoninfo">
-            <button type="submit" name="publish" value="publish" class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Info Berhasil Dipublish', 4000)">PUBLIKASIKAN</button>
-            <button type="submit" name="draft" class="waves-effect waves-light btn grey darken-2" onclick="Materialize.toast('Info Disimpan Menjadi Draft', 4000)">DRAFT</button>
+            <div class="col">
+                <button type="submit" name="publish" value="publish" class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Info Berhasil Dipublish', 4000)">PUBLIKASIKAN</button>
+                <button type="submit" name="draft" class="waves-effect waves-light btn grey darken-2" onclick="Materialize.toast('Info Disimpan Menjadi Draft', 4000)">DRAFT</button>
+            </div>
         </div>
         
         {!! Form::close() !!}
@@ -64,35 +66,6 @@ margin-top: 2em;
 </div>
 @endsection
 @section('script')
-<script type="text/javascript">
-    /* Attach the form event when jQuery loads. */
-$(document).ready(function(e){
-
-/* Handle any form's submit event. */
-    $("form").submit(function(e){
-
-        e.preventDefault();                 /* Stop the form from submitting immediately. */
-        var continueInvoke = true;          /* Variable used to avoid $(this) scope confusion with .each() function. */
-
-        /* Loop through each form element that has the required="" attribute. */
-        $("form input[required]").each(function(){
-
-            /* If the element has no value. */
-            if($(this).val() == ""){
-                continueInvoke = false;     /* Set the variable to false, to indicate that the form should not be submited. */
-            }
-
-        });
-
-        /* Read the variable. Detect any items with no value. */
-        if(continueInvoke == true){
-            $(this).submit();               /* Submit the form. */
-        }
-
-    });
-
-});
-</script>
 <script>
 $('select').material_select();
 $(".button-collapse").sideNav();
