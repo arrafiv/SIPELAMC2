@@ -10,7 +10,7 @@
 
 @section('isi-sidebar-in-content')
 <li><a href="{{action('Controller@getdaftarsurat')}}"><span class="pink-text text-darken-4">Daftar Surat</span></a></li>
-<li><a href="{{action('Controller@getdaftarsuratselesai')}}"><span class="pink-text text-darken-4">Daftar Surat Selesai</span></a></li>
+<li class="active"><a href="{{action('Controller@getdaftarsuratselesai')}}"><span class="pink-text text-darken-4">Daftar Surat Selesai</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 

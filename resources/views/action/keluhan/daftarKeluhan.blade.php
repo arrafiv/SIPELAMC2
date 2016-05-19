@@ -8,7 +8,7 @@ margin-top: 5em;
 </style>
 @endsection
 @section('isi-side-nav')
-@if($roledatabase === "mahasiswa")
+@if($roledatabase === "mahasiswa" or $roledatabase === "staff")
 <li><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
 @endif
 <li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
@@ -23,10 +23,10 @@ margin-top: 5em;
 @endsection
 
 @section('isi-sidebar-in-content')
-@if($roledatabase === "mahasiswa")
+@if($roledatabase === "mahasiswa" or $roledatabase === "staff")
 <li><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
 @endif
-<li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
+<li class="active"><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
 @if($roledatabase === "manajer akademik")
 <li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diterima</span></a></li>
 @elseif($roledatabase === "manajer infrastruktur")
@@ -50,7 +50,7 @@ margin-top: 5em;
             <table id="example" class="bordered highlight" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        @if ($roledatabase === "mahasiswa")
+                        @if ($roledatabase === "mahasiswa" or $roledatabase === "staff")
                         <th data-field="divisi">Tujuan</th>
                         <th data-field="keluhan">Keluhan</th>
                         <th data-field="status">Status</th>
@@ -66,7 +66,7 @@ margin-top: 5em;
                     </tr>
                 </thead>
                 <tbody>
-                    @if($roledatabase === "mahasiswa")
+                    @if($roledatabase === "mahasiswa" or $roledatabase === "staff")
                     @foreach($keluhanmahasiswa as $keluhann)
                     <tr>
                         <td>{{$keluhann->divisi}}</td>

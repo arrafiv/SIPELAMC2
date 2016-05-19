@@ -60,13 +60,16 @@
                         <input class="upload-file" type="file" name="image" accept="image/x-png, image/gif, image/jpeg">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
+                        <input class="file-path validate" type="text" value="{!! $gambar !!}">
                     </div>
                 </div>
             </div>
         </div>
-        <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Keluhan Berhasil Dibuat', 5000)">SUBMIT
-        </button>
+        <div class="row">
+            <div class="col l3">
+                <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Keluhan Berhasil Dibuat', 5000)">SUBMIT</button>
+            </div>
+        </div>
         {!! Form::close() !!}
     </div>
 </div>

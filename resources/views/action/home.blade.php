@@ -82,7 +82,7 @@
                             </div>
 
                              <!-- MAHASISWA -->
-                            @else
+                            @elseif($role === "mahasiswa")
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showinfo_kemahasiswaan')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
                             </div>
@@ -94,6 +94,13 @@
                             </div>
                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getcreateizin')}}"><img src="{{URL::to('src/assethome-04.png')}}"></a>
                                 <div class="desc"><span class="pink-text text-darken-4">Pengajuan Ijin</span></div>
+                            </div>
+                            @else
+                             <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@showinfo_kemahasiswaan')}}"><img src="{{URL::to('src/assethome-01.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Info Kemahasiswaan</span></div>
+                            </div>
+                            <div class="col s12 m6 l3" id="assethome"><a href="{{action('Controller@getcreatekeluhan')}}"><img src="{{URL::to('src/assethome-03.png')}}"></a>
+                                <div class="desc"><span class="pink-text text-darken-4">Keluhan dan Usulan</span></div>
                             </div>
                             @endif
                         </div>
@@ -118,7 +125,6 @@
                 <div class="card-content white">
                     <span class="grey-text text-darken-1">{!! $username !!}</span>
 
-                    @if ($role === "mahasiswa")
                      <!-- Modal Trigger -->
                       <a class="modal-trigger" href="#modal1">
                         <i class="material-icons pink-text text-darken-4 right">mode_edit</i>
@@ -145,16 +151,13 @@
                         {!! Form::close() !!}
                         </div>
                       </div>
-                    @endif
                 
                     <div class=""><p class="pink-text text-darken-4">{!! $role !!}</p></div>
-                    @if ($role === "mahasiswa")
                     <br>
                     <br>
                     <span class="grey-text text-darken-1"><i class="material-icons pink-text text-darken-4">phone</i>  {!! $no_hp !!}</span>
                     <br>
                     <span class="grey-text text-darken-1"><i class="material-icons pink-text text-darken-4">email</i>  {!! $email !!}</span>
-                    @endif
                 </div>
             </div>
         </div>

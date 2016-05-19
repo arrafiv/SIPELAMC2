@@ -7,7 +7,7 @@
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 @section('isi-sidebar-in-content')
-<li><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
+<li class="active"><a href="{{action('Controller@getcreatekeluhan')}}"><span class="pink-text text-darken-4">Ajukan Keluhan</span></a></li>
 <li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
@@ -67,8 +67,12 @@
                 </div>
             </div>
         </div>
-            <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Keluhan Berhasil Dibuat', 5000)">SUBMIT
-            </button>
+        <div class="row">
+            <div class="col l3">
+                <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Keluhan Berhasil Dibuat', 5000)">SUBMIT</button>
+            </div>
+        </div>
+            
         {!! Form::close() !!}
         </form>
     </div>

@@ -15,7 +15,7 @@ margin-top: 10em;
 
 @section('isi-sidebar-in-content')
 <li><a href="{{action('Controller@getdaftarkeluhan')}}"><span class="pink-text text-darken-4">Daftar Keluhan</span></a></li>
-<li><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
+<li class="active"><a href="{{action('Controller@getdaftarkeluhandiproses')}}"><span class="pink-text text-darken-4">Daftar Keluhan Diproses</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endsection
 @section('content')

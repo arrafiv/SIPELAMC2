@@ -21,14 +21,14 @@
 @section('isi-sidebar-in-content')
 @if($roledatabase === "mahasiswa")
 <li><a href="{{action('Controller@getcreateizin')}}"><span class="pink-text text-darken-4">Buat Pengajuan Izin</span></a></li>
-<li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
+<li class="active"><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @elseif($roledatabase === "sekretariat")
-<li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
-<li><a href="{{action('Controller@getdaftarizinselesai')}}"><span class="pink-text text-darken-4">Izin Kegiatan Selesai</span></a></li>
+<li class="active"><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
+<li ><a href="{{action('Controller@getdaftarizinselesai')}}"><span class="pink-text text-darken-4">Izin Kegiatan Selesai</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @elseif($roledatabase === "manajer akademik")
-<li><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
+<li class="active"><a href="{{action('Controller@getdaftarizin')}}"><span class="pink-text text-darken-4">Daftar Izin Kegiatan</span></a></li>
 <li><a href="{{action('Controller@getdaftarizinlist')}}"><span class="pink-text text-darken-4">List Pengajuan Izin</span></a></li>
 <li><a href="#"><span class="pink-text text-darken-4">SOP</span></a></li>
 @endif
