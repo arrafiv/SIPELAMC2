@@ -67,7 +67,7 @@
         </div>
         <div class="row">
             <div class="col l3">
-                <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Keluhan Berhasil Dibuat', 5000)">SUBMIT</button>
+                <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Keluhan Berhasil Diubah', 5000)">SUBMIT</button>
             </div>
         </div>
         {!! Form::close() !!}

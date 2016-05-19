@@ -43,7 +43,7 @@
                     {!! Form::label('icon_telephone', 'Nomor Telepon') !!}
                 </div>
             </div>
-            <button class="waves-effect waves-light btn pink darken-4">SUBMIT</button>
+            <button class="waves-effect waves-light btn pink darken-4" onclick="Materialize.toast('Surat Berhasil Dibuat', 4000)">SUBMIT</button>
         {!! Form::close() !!}
         </form>
     </div>
